@@ -23,12 +23,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
-		<io.jsonwebtoken.version>0.6.0</io.jsonwebtoken.version>
-		<com.google.guava.version>18.0</com.google.guava.version>
-        <br.com.six2six.version>3.1.0</br.com.six2six.version>
-		<com.github.javafaker.version>0.13</com.github.javafaker.version>
+		<jjwt.version>0.6.0</jjwt.version>
+		<guava.version>18.0</guava.version>
+        <fixture-factory.version>3.1.0</fixture-factory.version>
+		<javafaker.version>0.13</javafaker.version>
 
-        <org.codehaus.mojo.version>2.7</org.codehaus.mojo.version>
+        <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>${io.jsonwebtoken.version}</version>
+			<version>${jjwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>${com.google.guava.version}</version>
+			<version>${guava.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
@@ -99,13 +99,13 @@
         <dependency>
             <groupId>br.com.six2six</groupId>
             <artifactId>fixture-factory</artifactId>
-            <version>${br.com.six2six.version}</version>
+            <version>${fixture-factory.version}</version>
             <scope>test</scope>
         </dependency>
 		<dependency>
 			<groupId>com.github.javafaker</groupId>
 			<artifactId>javafaker</artifactId>
-			<version>${com.github.javafaker.version}</version>
+			<version>${javafaker.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -118,17 +118,24 @@
 			</plugin>
 
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>${org.codehaus.mojo.version}</version>
-                <configuration>
-                    <formats>
-                        <format>html</format>
-                        <format>xml</format>
-                    </formats>
-                    <check />
-                </configuration>
-            </plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
