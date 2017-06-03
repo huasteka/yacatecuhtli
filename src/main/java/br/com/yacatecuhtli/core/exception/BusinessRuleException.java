@@ -1,6 +1,6 @@
 package br.com.yacatecuhtli.core.exception;
 
-import br.com.yacatecuhtli.core.message.ErrorMessageHolder;
+import br.com.yacatecuhtli.core.message.JsonErrorMessageHolder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,10 +16,10 @@ import java.util.function.Supplier;
 public class BusinessRuleException extends RuntimeException {
 
     @Getter
-    private List<ErrorMessageHolder> errors = new ArrayList<>();
+    private List<JsonErrorMessageHolder> errors = new ArrayList<>();
 
     public BusinessRuleException addMessage(ErrorMessageCode errorMessage, Object... parameters) {
-        this.errors.add(ErrorMessageHolder.createInstance(errorMessage.getMessageKey(), parameters));
+        this.errors.add(JsonErrorMessageHolder.createInstance(errorMessage.getMessageKey(), parameters));
         return this;
     }
 

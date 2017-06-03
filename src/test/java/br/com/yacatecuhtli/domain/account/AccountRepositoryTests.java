@@ -1,7 +1,6 @@
-package br.com.yacatecuhtli.repository;
+package br.com.yacatecuhtli.domain.account;
 
-import br.com.yacatecuhtli.domain.account.Account;
-import br.com.yacatecuhtli.domain.account.AccountRepository;
+import br.com.yacatecuhtli.core.AbstractRepositoryTests;
 import br.com.yacatecuhtli.template.AccountTemplateLoader;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;

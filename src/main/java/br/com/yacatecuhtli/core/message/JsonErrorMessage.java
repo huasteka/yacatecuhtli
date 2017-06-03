@@ -9,12 +9,12 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ErrorMessageJson {
+public class JsonErrorMessage {
 
     private String messageKey;
     private String message;
 
-    public ErrorMessageJson(String messageKey) {
+    public JsonErrorMessage(String messageKey) {
         this.messageKey = messageKey;
     }
 

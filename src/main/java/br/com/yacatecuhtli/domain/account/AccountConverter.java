@@ -15,7 +15,7 @@ public class AccountConverter extends JsonToEntityConverter<AccountJson, Account
 
     @Override
     public void update(AccountJson source, Account target) {
-
+        target.setName(source.getName());
     }
 
 }

@@ -1,6 +1,6 @@
 package br.com.yacatecuhtli.core.json;
 
-import br.com.yacatecuhtli.core.message.ErrorMessageJson;
+import br.com.yacatecuhtli.core.message.JsonErrorMessage;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -23,13 +23,13 @@ public class JsonResponse {
 
     protected JsonResponseMetadata meta;
 
-    protected List<ErrorMessageJson> errors = new ArrayList<>();
+    protected List<JsonErrorMessage> errors = new ArrayList<>();
 
-    public void setErrors(List<ErrorMessageJson> errors) {
+    public void setErrors(List<JsonErrorMessage> errors) {
         Optional.ofNullable(errors).orElseGet(ArrayList::new).forEach(this::addError);
     }
 
-    public void addError(ErrorMessageJson error) {
+    public void addError(JsonErrorMessage error) {
         this.errors.add(error);
     }
 

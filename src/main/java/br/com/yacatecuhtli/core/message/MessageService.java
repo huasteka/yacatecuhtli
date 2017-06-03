@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class MessageService {
 
-    private static ThreadLocal<Map<String, ErrorMessageHolder>> messageHolder = new ThreadLocal<>();
+    private static ThreadLocal<Map<String, JsonErrorMessageHolder>> messageHolder = new ThreadLocal<>();
 
     private ReloadableResourceBundleMessageSource messageSource;
 
@@ -20,30 +20,30 @@ public class MessageService {
     }
 
     public void addMessage(String messageKey, Object... parameters) {
-        getMessageHolder().put(messageKey, ErrorMessageHolder.createInstance(messageKey, parameters));
-    }
-
-    public void addMessageList(List<ErrorMessageHolder> messageList) {
-        for (ErrorMessageHolder message : messageList) {
-            getMessageHolder().put(message.getErrorMessage().getMessageKey(), message);
-        }
+        getMessageHolder().put(messageKey, JsonErrorMessageHolder.createInstance(messageKey, parameters));
     }
 
     public String getMessage(String messageKey, Object... parameters) {
         return getMessageSource().getMessage(messageKey, parameters, LocaleContextHolder.getLocale());
     }
 
-    public List<ErrorMessageJson> getMessageList() {
+    public void addMessageList(List<JsonErrorMessageHolder> messageList) {
+        for (JsonErrorMessageHolder message : messageList) {
+            getMessageHolder().put(message.getErrorMessage().getMessageKey(), message);
+        }
+    }
+
+    public List<JsonErrorMessage> getMessageList() {
         return messageHolder.get() == null
                 ? Collections.emptyList()
                 : messageHolder.get().entrySet().stream().map(this::getMessage).collect(Collectors.toList());
     }
 
-    protected ErrorMessageJson getMessage(Map.Entry<String, ErrorMessageHolder> entry) {
-        String messageContent = getMessage(entry.getKey(), entry.getValue().getParameters());
-        ErrorMessageJson alertMessage = entry.getValue().getErrorMessage();
-        alertMessage.setMessage(messageContent);
-        return alertMessage;
+    public Map<String, JsonErrorMessageHolder> getMessageHolder() {
+        if (messageHolder.get() == null) {
+            messageHolder.set(new LinkedHashMap<>());
+        }
+        return messageHolder.get();
     }
 
     public void clearMessageHolder() {
@@ -52,11 +52,11 @@ public class MessageService {
         }
     }
 
-    protected Map<String, ErrorMessageHolder> getMessageHolder() {
-        if (messageHolder.get() == null) {
-            messageHolder.set(new LinkedHashMap<>());
-        }
-        return messageHolder.get();
+    protected JsonErrorMessage getMessage(Map.Entry<String, JsonErrorMessageHolder> entry) {
+        String messageContent = getMessage(entry.getKey(), entry.getValue().getParameters());
+        JsonErrorMessage alertMessage = entry.getValue().getErrorMessage();
+        alertMessage.setMessage(messageContent);
+        return alertMessage;
     }
 
     protected ReloadableResourceBundleMessageSource getMessageSource() {

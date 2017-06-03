@@ -3,6 +3,7 @@ package br.com.yacatecuhtli;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import org.junit.Before;
+import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ public abstract class AbstractApplicationTests {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         FixtureFactoryLoader.loadTemplates(FIXTURE_TEMPLATE_PACKAGE);
     }
 
@@ -19,7 +21,7 @@ public abstract class AbstractApplicationTests {
         return Fixture.from(entity).gimme(template);
     }
 
-    protected <T> List<T> createObjectList(Class<T> entity, String template, Integer quantity) {
+    protected <T> List<T> createObjectList(Class<T> entity, String template, int quantity) {
         return Fixture.from(entity).gimme(quantity, template);
     }
 

@@ -1,6 +1,6 @@
 package br.com.yacatecuhtli.core.json;
 
-import br.com.yacatecuhtli.core.message.ErrorMessageJson;
+import br.com.yacatecuhtli.core.message.JsonErrorMessage;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class JsonResponseFactory {
         return jsonResponse;
     }
 
-    public static JsonResponse create(List<ErrorMessageJson> errors) {
+    public static JsonResponse create(List<JsonErrorMessage> errors) {
         JsonResponse jsonResponse = new JsonResponse();
         jsonResponse.setErrors(errors);
         return jsonResponse;
