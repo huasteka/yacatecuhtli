@@ -2,7 +2,6 @@ package br.com.yacatecuhtli.domain.account;
 
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.core.service.AbstractService;
-import br.com.yacatecuhtli.core.service.CrudServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class AccountService extends AbstractService implements CrudServiceInterface<AccountJson> {
+public class AccountService extends AbstractService {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -23,14 +22,12 @@ public class AccountService extends AbstractService implements CrudServiceInterf
     private AccountConverter accountConverter;
 
     @Transactional
-    @Override
     public AccountJson save(AccountJson accountJson) {
         ensureThatNameIsNotBlank(accountJson);
         return accountRepository.save(accountConverter.convert(accountJson)).toJson();
     }
 
     @Transactional
-    @Override
     public void update(Integer accountId, AccountJson accountJson) {
         ensureThatNameIsNotBlank(accountJson);
         Account account = accountRepository.findOne(accountId);
@@ -54,7 +51,6 @@ public class AccountService extends AbstractService implements CrudServiceInterf
     }
 
     @Transactional
-    @Override
     public void destroy(Integer accountId) {
         ensureThatExists(accountId);
         accountRepository.delete(accountId);
@@ -66,7 +62,6 @@ public class AccountService extends AbstractService implements CrudServiceInterf
                 .throwException();
     }
 
-    @Override
     public AccountJson findOne(Integer accountId) {
         return Optional.ofNullable(accountRepository.findOne(accountId)).map(Account::toJson).orElse(null);
     }

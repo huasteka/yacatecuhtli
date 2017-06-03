@@ -2,8 +2,8 @@ package br.com.yacatecuhtli.domain.account;
 
 import br.com.yacatecuhtli.core.AbstractRepositoryTests;
 import br.com.yacatecuhtli.template.AccountTemplateLoader;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,9 @@ public class AccountRepositoryTests extends AbstractRepositoryTests {
 
     @Test
     public void shouldFindByName() {
-        Account account = createObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
-        this.entityManager.persist(account);
+        Account account = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
         Account savedAccount = this.accountRepository.findByNameLikeIgnoreCase(account.getName().toUpperCase());
-        MatcherAssert.assertThat(savedAccount.getId(), Matchers.equalTo(account.getId()));
+        Assert.assertThat(savedAccount.getId(), Matchers.equalTo(account.getId()));
     }
 
 }

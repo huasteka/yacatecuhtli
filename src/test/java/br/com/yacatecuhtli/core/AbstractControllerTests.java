@@ -14,16 +14,16 @@ public class AbstractControllerTests extends AbstractApplicationTests {
     protected MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.defaultCharset());
 
     @MockBean
-    private MessageService messageService;
+    protected MessageService messageService;
 
     @Autowired
     protected MockMvc mvc;
 
-    public MediaType getContentType() {
+    protected MediaType getContentType() {
         return contentType;
     }
 
-    public MockMvc getMvc() {
+    protected MockMvc getMvc() {
         return mvc;
     }
 

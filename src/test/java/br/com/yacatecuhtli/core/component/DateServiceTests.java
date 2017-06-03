@@ -2,8 +2,8 @@ package br.com.yacatecuhtli.core.component;
 
 import br.com.yacatecuhtli.core.AbstractCoreTests;
 import br.com.yacatecuhtli.core.service.DateService;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -22,14 +22,14 @@ public class DateServiceTests extends AbstractCoreTests {
     @Test
     public void shouldCreateDate() {
         Date now = new Date(System.currentTimeMillis());
-        MatcherAssert.assertThat(truncateMilliseconds(dateService.getNow()), Matchers.equalTo(truncateMilliseconds(now)));
+        Assert.assertThat(truncateMilliseconds(dateService.getNow()), Matchers.equalTo(truncateMilliseconds(now)));
     }
 
     @Test
     public void shouldAddSecondsToDate() {
         Date now = new Date(System.currentTimeMillis());
         Date oneHourAhead = applyToDate(now, (calendar) -> calendar.add(Calendar.SECOND, 3600));
-        MatcherAssert.assertThat(dateService.addSecondsToDate(now, 3600), Matchers.equalTo(oneHourAhead));
+        Assert.assertThat(dateService.addSecondsToDate(now, 3600), Matchers.equalTo(oneHourAhead));
     }
 
     private Date applyToDate(Date object, Consumer<Calendar> apply) {

@@ -4,8 +4,8 @@ import br.com.yacatecuhtli.core.AbstractRepositoryTests;
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.template.AccountTemplateLoader;
 import com.github.javafaker.Faker;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -29,11 +29,11 @@ public class AccountServiceTests extends AbstractRepositoryTests {
         int accountQuantity = 10;
         List<Account> accountList = createPersistedObjectList(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE, accountQuantity);
         List<AccountJson> resultSet = accountService.findAll();
-        MatcherAssert.assertThat(resultSet.size(), Matchers.equalTo(accountQuantity));
+        Assert.assertThat(resultSet.size(), Matchers.equalTo(accountQuantity));
         for (Account account : accountList) {
             resultSet.stream()
                     .filter(result -> account.getId().compareTo(result.getId()) == 0)
-                    .forEach(result -> MatcherAssert.assertThat(result, Matchers.samePropertyValuesAs(account.toJson())));
+                    .forEach(result -> Assert.assertThat(result, Matchers.samePropertyValuesAs(account.toJson())));
         }
     }
 
@@ -42,17 +42,17 @@ public class AccountServiceTests extends AbstractRepositoryTests {
         Account savedAccount = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
         int savedAccountId = savedAccount.getId();
         AccountJson result = accountService.findOne(savedAccountId);
-        MatcherAssert.assertThat(result.getId(), Matchers.equalTo(savedAccountId));
-        MatcherAssert.assertThat(result, Matchers.samePropertyValuesAs(savedAccount.toJson()));
+        Assert.assertThat(result.getId(), Matchers.equalTo(savedAccountId));
+        Assert.assertThat(result, Matchers.samePropertyValuesAs(savedAccount.toJson()));
     }
 
     @Test
     public void shouldSaveAccount() {
         AccountJson payload = createObject(AccountJson.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
-        MatcherAssert.assertThat(payload.getId(), Matchers.nullValue());
+        Assert.assertThat(payload.getId(), Matchers.nullValue());
         AccountJson savedAccount = accountService.save(payload);
-        MatcherAssert.assertThat(savedAccount, Matchers.notNullValue());
-        MatcherAssert.assertThat(savedAccount.getId(), Matchers.notNullValue());
+        Assert.assertThat(savedAccount, Matchers.notNullValue());
+        Assert.assertThat(savedAccount.getId(), Matchers.notNullValue());
     }
 
     @Test(expected = BusinessRuleException.class)
@@ -69,7 +69,7 @@ public class AccountServiceTests extends AbstractRepositoryTests {
         payload.setName(new Faker().lorem().characters(15));
         accountService.update(payload.getId(), payload);
         Account updatedAccount = getObject(Account.class, payload.getId());
-        MatcherAssert.assertThat(oldName, Matchers.not(Matchers.equalToIgnoringCase(updatedAccount.getName())));
+        Assert.assertThat(oldName, Matchers.not(Matchers.equalToIgnoringCase(updatedAccount.getName())));
     }
 
     @Test(expected = BusinessRuleException.class)
