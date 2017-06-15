@@ -1,6 +1,6 @@
 package br.com.yacatecuhtli.domain.account;
 
-import br.com.yacatecuhtli.core.AbstractRepositoryTests;
+import br.com.yacatecuhtli.core.AbstractRepositorySpec;
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.template.AccountTemplateLoader;
 import com.github.javafaker.Faker;
@@ -10,13 +10,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class AccountServiceTests extends AbstractRepositoryTests {
+public class AccountServiceTests extends AbstractRepositorySpec {
 
     @SpyBean
     private AccountConverter accountConverter;
@@ -28,7 +29,7 @@ public class AccountServiceTests extends AbstractRepositoryTests {
     public void shouldListAccounts() {
         int accountQuantity = 10;
         List<Account> accountList = createPersistedObjectList(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE, accountQuantity);
-        List<AccountJson> resultSet = accountService.findAll();
+        List<AccountJson> resultSet = accountService.findAll(new PageRequest(0, 10)).getResult();
         Assert.assertThat(resultSet.size(), Matchers.equalTo(accountQuantity));
         for (Account account : accountList) {
             resultSet.stream()

@@ -1,8 +1,6 @@
 package br.com.yacatecuhtli.core.controller;
 
-import br.com.yacatecuhtli.core.json.JsonResponse;
-import br.com.yacatecuhtli.core.json.JsonResponseFactory;
-import br.com.yacatecuhtli.core.json.JsonResponseMetadata;
+import br.com.yacatecuhtli.core.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +21,10 @@ public abstract class AbstractRestController {
 
     protected ResponseEntity<JsonResponse> withJson(Object result, JsonResponseMetadata metadata) {
         return withJson(result, metadata, HttpStatus.OK);
+    }
+
+    protected <J extends JsonRepresentation> ResponseEntity<JsonResponse> withJson(JsonPagedResponse<J> pagedResponse) {
+        return withJson(pagedResponse.getResult(), pagedResponse.getMeta());
     }
 
     protected ResponseEntity<JsonResponse> withJson(Object result, HttpStatus status) {

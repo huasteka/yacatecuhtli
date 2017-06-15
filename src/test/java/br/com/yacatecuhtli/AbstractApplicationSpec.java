@@ -7,7 +7,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-public abstract class AbstractApplicationTests {
+public abstract class AbstractApplicationSpec {
 
     private static final String FIXTURE_TEMPLATE_PACKAGE = "br.com.yacatecuhtli.template";
 

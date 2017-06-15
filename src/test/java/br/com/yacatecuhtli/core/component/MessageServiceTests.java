@@ -1,6 +1,6 @@
 package br.com.yacatecuhtli.core.component;
 
-import br.com.yacatecuhtli.core.AbstractCoreTests;
+import br.com.yacatecuhtli.core.AbstractCoreSpec;
 import br.com.yacatecuhtli.core.message.JsonErrorMessage;
 import br.com.yacatecuhtli.core.message.MessageService;
 import org.hamcrest.Matchers;
@@ -11,7 +11,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 
 import java.util.List;
 
-public class MessageServiceTests extends AbstractCoreTests {
+public class MessageServiceTests extends AbstractCoreSpec {
 
     private MessageService messageService;
 

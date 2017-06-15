@@ -1,6 +1,6 @@
 package br.com.yacatecuhtli.core.component;
 
-import br.com.yacatecuhtli.core.AbstractCoreTests;
+import br.com.yacatecuhtli.core.AbstractCoreSpec;
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.core.message.JsonErrorMessageHolder;
 import br.com.yacatecuhtli.core.message.TestMessageCode;
@@ -8,7 +8,7 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class BusinessRuleExceptionTests extends AbstractCoreTests {
+public class BusinessRuleExceptionTests extends AbstractCoreSpec {
 
     @Test(expected = BusinessRuleException.class)
     public void shouldThrowExceptionIfListIsNotEmpty() {
@@ -28,7 +28,7 @@ public class BusinessRuleExceptionTests extends AbstractCoreTests {
     }
 
     @Test
-    public void shouldThrowExceptionIfConditionIsFalse() {
+    public void shouldNotThrowExceptionIfConditionIsFalse() {
         BusinessRuleException exception = new BusinessRuleException();
         exception.addMessage(() -> false, TestMessageCode.TEST_MESSAGE_CODE);
         Assert.assertThat(exception.getErrors(), Matchers.emptyCollectionOf(JsonErrorMessageHolder.class));

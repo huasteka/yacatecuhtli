@@ -9,10 +9,12 @@ import lombok.*;
 @EqualsAndHashCode
 public class JsonResponseMetadata {
 
-    private Integer currentPage;
-
     private Integer pageSize;
 
-    private Integer totalItems;
+    private Integer currentPage;
+
+    private Integer totalPages;
+
+    private Long totalItems;
 
 }

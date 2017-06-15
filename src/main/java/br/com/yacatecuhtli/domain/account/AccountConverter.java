@@ -1,10 +1,10 @@
 package br.com.yacatecuhtli.domain.account;
 
-import br.com.yacatecuhtli.core.json.JsonToEntityConverter;
+import br.com.yacatecuhtli.core.json.JsonConverter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccountConverter extends JsonToEntityConverter<AccountJson, Account> {
+public class AccountConverter extends JsonConverter<AccountJson, Account> {
 
     @Override
     public Account convert(AccountJson source) {

@@ -2,14 +2,14 @@ package br.com.yacatecuhtli.core;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.processor.HibernateProcessor;
-import br.com.yacatecuhtli.AbstractApplicationTests;
+import br.com.yacatecuhtli.AbstractApplicationSpec;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.List;
 
-public abstract class AbstractRepositoryTests extends AbstractApplicationTests {
+public abstract class AbstractRepositorySpec extends AbstractApplicationSpec {
 
     @Autowired
     protected TestEntityManager entityManager;

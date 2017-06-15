@@ -1,6 +1,6 @@
 package br.com.yacatecuhtli.core.component;
 
-import br.com.yacatecuhtli.core.AbstractCoreTests;
+import br.com.yacatecuhtli.core.AbstractCoreSpec;
 import br.com.yacatecuhtli.core.service.DateService;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.function.Consumer;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DateServiceTests extends AbstractCoreTests {
+public class DateServiceTests extends AbstractCoreSpec {
 
     @Spy
     private DateService dateService;

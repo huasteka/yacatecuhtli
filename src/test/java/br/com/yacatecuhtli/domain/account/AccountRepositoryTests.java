@@ -1,6 +1,6 @@
 package br.com.yacatecuhtli.domain.account;
 
-import br.com.yacatecuhtli.core.AbstractRepositoryTests;
+import br.com.yacatecuhtli.core.AbstractRepositorySpec;
 import br.com.yacatecuhtli.template.AccountTemplateLoader;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class AccountRepositoryTests extends AbstractRepositoryTests {
+public class AccountRepositoryTests extends AbstractRepositorySpec {
 
     @Autowired
     private AccountRepository accountRepository;

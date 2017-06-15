@@ -14,8 +14,8 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 public class Account extends TimestampEntity {
 
-    @Id
     @Getter
+    @Id
     @GeneratedValue
     private Integer id;
 

@@ -9,6 +9,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class DatabaseConfiguration {
 
-    static final String JPA_REPOSITORY_PACKAGE = "br.com.yacatecuhtli.domain";
+    protected static final String JPA_REPOSITORY_PACKAGE = "br.com.yacatecuhtli.domain";
 
 }

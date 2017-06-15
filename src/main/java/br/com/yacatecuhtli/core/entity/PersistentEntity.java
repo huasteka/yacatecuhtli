@@ -16,6 +16,6 @@ public abstract class PersistentEntity {
 
     public abstract Integer getId();
 
-    public abstract JsonRepresentation toJson();
+    public abstract <J extends JsonRepresentation> J toJson();
 
 }
