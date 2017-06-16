@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 @Service
-public class PaymentTypeService extends AbstractCrudService<PaymentType, PaymentTypeJson, PaymentTypeConverter, PaymentTypeRepository> {
+public class PaymentTypeService extends AbstractCrudService<PaymentTypeJson, PaymentType, PaymentTypeConverter, PaymentTypeRepository> {
 
     @Autowired
     public PaymentTypeService(PaymentTypeConverter jsonConverter, PaymentTypeRepository entityRepository) {

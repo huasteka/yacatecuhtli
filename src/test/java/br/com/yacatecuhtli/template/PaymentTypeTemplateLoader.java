@@ -18,28 +18,27 @@ public class PaymentTypeTemplateLoader extends AbstractTemplateLoader {
 
     @Override
     public void load() {
-        Rule paymentTermsRule = new Rule() {{
-            add("stagedPayment", FAKER.bool().bool());
-            add("tax", new BigDecimal(FAKER.number().randomDouble(2, 0, 100)));
-            add("installmentQuantity", FAKER.number().numberBetween(1, 10));
-            add("firstInstallmentTerm", FAKER.number().numberBetween(1, 30));
-            add("installmentTerm", FAKER.number().numberBetween(1, 30));
-        }};
+        Rule paymentTermsRule = new Rule();
+        paymentTermsRule.add("stagedPayment", FAKER.bool().bool());
+        paymentTermsRule.add("tax", new BigDecimal(FAKER.number().randomDouble(2, 0, 100)));
+        paymentTermsRule.add("installmentQuantity", FAKER.number().numberBetween(1, 10));
+        paymentTermsRule.add("firstInstallmentTerm", FAKER.number().numberBetween(1, 30));
+        paymentTermsRule.add("installmentTerm", FAKER.number().numberBetween(1, 30));
 
         Fixture.of(PaymentTerms.class).addTemplate(VALID_PAYMENT_TYPE_TEMPLATE, paymentTermsRule);
         Fixture.of(PaymentTermsJson.class).addTemplate(VALID_PAYMENT_TYPE_TEMPLATE, paymentTermsRule);
 
-        Fixture.of(PaymentType.class).addTemplate(VALID_PAYMENT_TYPE_TEMPLATE, new Rule() {{
-            add("name", uniqueRandom(FAKER.lorem().words(30).toArray()));
-            add("terms", one(PaymentTerms.class, VALID_PAYMENT_TYPE_TEMPLATE));
-            add("paymentAccount", one(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE));
-        }});
+        Rule entityRule = new Rule();
+        entityRule.add("name", entityRule.uniqueRandom(FAKER.lorem().words(30).toArray()));
+        entityRule.add("terms", entityRule.one(PaymentTerms.class, VALID_PAYMENT_TYPE_TEMPLATE));
+        entityRule.add("paymentAccount", entityRule.one(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE));
+        Fixture.of(PaymentType.class).addTemplate(VALID_PAYMENT_TYPE_TEMPLATE, entityRule);
 
-        Fixture.of(PaymentTypeJson.class).addTemplate(VALID_PAYMENT_TYPE_TEMPLATE, new Rule() {{
-            add("name", uniqueRandom(FAKER.lorem().words(30).toArray()));
-            add("terms", one(PaymentTermsJson.class, VALID_PAYMENT_TYPE_TEMPLATE));
-            add("paymentAccount", one(AccountJson.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE));
-        }});
+        Rule jsonRule = new Rule();
+        jsonRule.add("name", jsonRule.uniqueRandom(FAKER.lorem().words(30).toArray()));
+        jsonRule.add("terms", jsonRule.one(PaymentTermsJson.class, VALID_PAYMENT_TYPE_TEMPLATE));
+        jsonRule.add("paymentAccount", jsonRule.one(AccountJson.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE));
+        Fixture.of(PaymentTypeJson.class).addTemplate(VALID_PAYMENT_TYPE_TEMPLATE, jsonRule);
     }
 
 }

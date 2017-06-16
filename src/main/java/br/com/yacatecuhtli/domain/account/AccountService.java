@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 @Service
-public class AccountService extends AbstractCrudService<Account, AccountJson, AccountConverter, AccountRepository> {
+public class AccountService extends AbstractCrudService<AccountJson, Account, AccountConverter, AccountRepository> {
 
     @Autowired
     public AccountService(AccountConverter jsonConverter, AccountRepository entityRepository) {

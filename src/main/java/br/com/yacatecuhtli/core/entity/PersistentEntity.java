@@ -12,10 +12,10 @@ import javax.persistence.MappedSuperclass;
 @Access(AccessType.FIELD)
 @ToString
 @EqualsAndHashCode
-public abstract class PersistentEntity {
+public abstract class PersistentEntity<J extends JsonRepresentation> {
 
     public abstract Integer getId();
 
-    public abstract <J extends JsonRepresentation> J toJson();
+    public abstract J toJson();
 
 }

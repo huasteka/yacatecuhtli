@@ -1,4 +1,4 @@
-package br.com.yacatecuhtli.domain.payment;
+package br.com.yacatecuhtli.domain.budget.group;
 
 import br.com.yacatecuhtli.core.controller.AbstractCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/payment-types")
-public class PaymentTypeController extends AbstractCrudController<PaymentTypeJson, PaymentType, PaymentTypeConverter, PaymentTypeRepository, PaymentTypeService> {
+@RequestMapping("/api/budget-groups")
+public class BudgetGroupController extends AbstractCrudController<BudgetGroupJson, BudgetGroup, BudgetGroupConverter, BudgetGroupRepository, BudgetGroupService> {
 
     @Autowired
-    public PaymentTypeController(PaymentTypeService entityService) {
+    public BudgetGroupController(BudgetGroupService entityService) {
         super(entityService);
     }
 

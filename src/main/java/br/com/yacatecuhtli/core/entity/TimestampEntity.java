@@ -1,5 +1,6 @@
 package br.com.yacatecuhtli.core.entity;
 
+import br.com.yacatecuhtli.core.json.JsonRepresentation;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -11,7 +12,7 @@ import java.util.Date;
 @MappedSuperclass
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class TimestampEntity extends VersionedEntity {
+public abstract class TimestampEntity<J extends JsonRepresentation> extends VersionedEntity<J> {
 
     @Column
     @Getter

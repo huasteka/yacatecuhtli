@@ -15,7 +15,7 @@ import java.util.Optional;
 @Table
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class PaymentType extends TimestampEntity {
+public class PaymentType extends TimestampEntity<PaymentTypeJson> {
 
     @Getter
     @Id
@@ -42,8 +42,8 @@ public class PaymentType extends TimestampEntity {
         return PaymentTypeJson.builder()
                 .id(this.id)
                 .name(this.name)
-                .terms(Optional.of(this.terms).orElseGet(PaymentTerms::new).toJson())
-                .paymentAccount(this.paymentAccount.toJson())
+                .terms(Optional.ofNullable(this.terms).orElseGet(PaymentTerms::new).toJson())
+                .paymentAccount(Optional.ofNullable(this.paymentAccount).orElseGet(Account::new).toJson())
                 .build();
     }
 

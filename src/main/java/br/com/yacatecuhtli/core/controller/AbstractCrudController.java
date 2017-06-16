@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-public class AbstractCrudController<E extends PersistentEntity, J extends JsonRepresentation, C extends JsonConverter<J, E>, R extends EntityRepository<E>, S extends AbstractCrudService<E, J, C, R>> extends AbstractRestController {
+public class AbstractCrudController<J extends JsonRepresentation, E extends PersistentEntity<J>, C extends JsonConverter<J, E>, R extends EntityRepository<E>, S extends AbstractCrudService<J, E, C, R>> extends AbstractRestController {
 
     protected S entityService;
 

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class AbstractCrudService<E extends PersistentEntity, J extends JsonRepresentation, C extends JsonConverter<J, E>, R extends EntityRepository<E>> extends AbstractService {
+public abstract class AbstractCrudService<J extends JsonRepresentation, E extends PersistentEntity<J>, C extends JsonConverter<J, E>, R extends EntityRepository<E>> extends AbstractService {
 
     protected C jsonConverter;
 

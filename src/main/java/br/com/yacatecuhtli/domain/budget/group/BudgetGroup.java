@@ -1,6 +1,6 @@
-package br.com.yacatecuhtli.domain.account;
+package br.com.yacatecuhtli.domain.budget.group;
 
-import br.com.yacatecuhtli.core.entity.TimestampEntity;
+import br.com.yacatecuhtli.core.entity.VersionedEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Account extends TimestampEntity<AccountJson> {
+public class BudgetGroup extends VersionedEntity<BudgetGroupJson> {
 
     @Getter
     @Id
@@ -21,12 +21,11 @@ public class Account extends TimestampEntity<AccountJson> {
 
     @Getter
     @Setter
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @Override
-    public AccountJson toJson() {
-        return AccountJson.builder().id(this.id).name(this.name).build();
+    public BudgetGroupJson toJson() {
+        return BudgetGroupJson.builder().id(this.id).name(this.name).build();
     }
-
 }

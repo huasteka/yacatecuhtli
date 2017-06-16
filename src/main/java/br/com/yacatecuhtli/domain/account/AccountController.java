@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/accounts")
-public class AccountController extends AbstractCrudController<Account, AccountJson, AccountConverter, AccountRepository, AccountService> {
+public class AccountController extends AbstractCrudController<AccountJson, Account, AccountConverter, AccountRepository, AccountService> {
 
     @Autowired
     public AccountController(AccountService entityService) {
