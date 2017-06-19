@@ -2,11 +2,9 @@ package br.com.yacatecuhtli.template;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import br.com.yacatecuhtli.core.AbstractTemplateLoader;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.AccountJson;
-import com.github.javafaker.Faker;
 
 public class AccountTemplateLoader extends AbstractTemplateLoader {
 

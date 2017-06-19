@@ -5,6 +5,8 @@ import br.com.yacatecuhtli.domain.budget.group.BudgetGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class BudgetCategoryConverter extends JsonConverter<BudgetCategoryJson, BudgetCategory> {
 
@@ -21,7 +23,7 @@ public class BudgetCategoryConverter extends JsonConverter<BudgetCategoryJson, B
     @Override
     public void update(BudgetCategoryJson source, BudgetCategory target) {
         target.setName(source.getName());
-        target.setGroup(budgetGroupRepository.findOne(source.getGroup().getId()));
+        Optional.ofNullable(source.getGroup()).ifPresent((group) -> target.setGroup(budgetGroupRepository.findOne(group.getId())));
     }
 
 }

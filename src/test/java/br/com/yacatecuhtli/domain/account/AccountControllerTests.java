@@ -1,7 +1,6 @@
 package br.com.yacatecuhtli.domain.account;
 
 import br.com.yacatecuhtli.core.AbstractControllerSpec;
-import br.com.yacatecuhtli.core.controller.RequestPagination;
 import br.com.yacatecuhtli.core.json.JsonPagedResponse;
 import br.com.yacatecuhtli.core.json.JsonResponseFactory;
 import br.com.yacatecuhtli.core.json.JsonResponseMetadata;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;

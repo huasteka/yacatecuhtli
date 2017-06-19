@@ -1,7 +1,6 @@
 package br.com.yacatecuhtli.core.controller;
 
 import br.com.yacatecuhtli.core.json.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

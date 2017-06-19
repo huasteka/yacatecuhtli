@@ -6,6 +6,8 @@ import br.com.yacatecuhtli.domain.payment.terms.PaymentTermsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class PaymentTypeConverter extends JsonConverter<PaymentTypeJson, PaymentType> {
 
@@ -25,8 +27,8 @@ public class PaymentTypeConverter extends JsonConverter<PaymentTypeJson, Payment
     @Override
     public void update(PaymentTypeJson source, PaymentType target) {
         target.setName(source.getName());
-        target.setTerms(paymentTermsConverter.convert(source.getTerms()));
-        target.setPaymentAccount(accountRepository.getOne(source.getPaymentAccount().getId()));
+        Optional.ofNullable(source.getTerms()).ifPresent((terms) -> target.setTerms(paymentTermsConverter.convert(terms)));
+        Optional.ofNullable(source.getPaymentAccount()).ifPresent((account) -> target.setPaymentAccount(accountRepository.getOne(account.getId())));
     }
 
 }
