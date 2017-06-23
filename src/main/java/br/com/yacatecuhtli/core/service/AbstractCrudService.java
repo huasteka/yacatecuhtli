@@ -5,14 +5,10 @@ import br.com.yacatecuhtli.core.entity.PersistentEntity;
 import br.com.yacatecuhtli.core.json.JsonConverter;
 import br.com.yacatecuhtli.core.json.JsonPagedResponse;
 import br.com.yacatecuhtli.core.json.JsonRepresentation;
-import br.com.yacatecuhtli.core.json.JsonResponseMetadata;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public abstract class AbstractCrudService<J extends JsonRepresentation, E extends PersistentEntity<J>, C extends JsonConverter<J, E>, R extends EntityRepository<E>> extends AbstractService {
 
@@ -54,15 +50,7 @@ public abstract class AbstractCrudService<J extends JsonRepresentation, E extend
     }
 
     public JsonPagedResponse<J> findAll(Pageable pageable) {
-        Page<E> page = entityRepository.findAll(pageable);
-        List<Object> result = page.getContent().stream().map(E::toJson).collect(Collectors.toList());
-        JsonResponseMetadata meta = new JsonResponseMetadata(page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements());
-        return new JsonPagedResponse<>(cast(result), meta);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T cast(Object object) {
-        return (T) object;
+        return getPagedResponse(entityRepository.findAll(pageable));
     }
 
 }
