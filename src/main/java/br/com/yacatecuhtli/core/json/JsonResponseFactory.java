@@ -17,6 +17,10 @@ public class JsonResponseFactory {
         return jsonResponse;
     }
 
+    public static <J extends JsonRepresentation> JsonResponse create(JsonPagedResponse<J> result) {
+        return create(result.getResult(), result.getMeta());
+    }
+
     public static JsonResponse create(List<JsonErrorMessage> errors) {
         JsonResponse jsonResponse = new JsonResponse();
         jsonResponse.setErrors(errors);

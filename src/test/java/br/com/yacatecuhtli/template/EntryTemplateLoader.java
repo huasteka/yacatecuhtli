@@ -2,6 +2,8 @@ package br.com.yacatecuhtli.template;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.base.Range;
+import br.com.six2six.fixturefactory.base.Sequence;
 import br.com.yacatecuhtli.core.AbstractTemplateLoader;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.AccountJson;
@@ -12,6 +14,8 @@ import br.com.yacatecuhtli.domain.payment.PaymentType;
 import br.com.yacatecuhtli.domain.payment.PaymentTypeJson;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class EntryTemplateLoader extends AbstractTemplateLoader {
 
@@ -19,14 +23,16 @@ public class EntryTemplateLoader extends AbstractTemplateLoader {
 
     @Override
     public void load() {
+        Sequence<BigDecimal> bigDecimalSequence = () -> new BigDecimal(FAKER.number().randomDouble(2, 0, 10000)).setScale(2, RoundingMode.HALF_EVEN);
+
         Rule baseRule = new Rule();
         baseRule.add("issuedAt", null);
         baseRule.add("executedAt", null);
         baseRule.add("type", baseRule.uniqueRandom(EntryType.class));
-        baseRule.add("grossValue", new BigDecimal(FAKER.number().randomDouble(2, 0L, 1000000L)));
-        baseRule.add("netValue", new BigDecimal(FAKER.number().randomDouble(2, 0L, 1000000L)));
-        baseRule.add("addition", new BigDecimal(FAKER.number().randomDouble(2, 0L, 1000L)));
-        baseRule.add("discount", new BigDecimal(FAKER.number().randomDouble(2, 0L, 1000L)));
+        baseRule.add("grossValue", baseRule.sequence(bigDecimalSequence));
+        baseRule.add("netValue", baseRule.sequence(bigDecimalSequence));
+        baseRule.add("addition", baseRule.sequence(bigDecimalSequence));
+        baseRule.add("discount", baseRule.sequence(bigDecimalSequence));
         baseRule.add("description", FAKER.lorem().sentence());
 
         Rule entityRule = new Rule();

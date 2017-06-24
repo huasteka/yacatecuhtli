@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EntryRepository extends EntityRepository<Entry> {
 
-    Page<Entry> findAllByAccountId(Integer accountId, Pageable pageable);
+    Page<Entry> findAllByAccountIdOrderByIssuedAtDesc(Integer accountId, Pageable pageable);
 
 }

@@ -15,7 +15,7 @@ public abstract class AbstractService implements ServiceInterface {
 
     protected <X extends PersistentEntity<Y>, Y extends JsonRepresentation> JsonPagedResponse<Y> getPagedResponse(Page<X> page) {
         List<Object> result = page.getContent().stream().map(X::toJson).collect(Collectors.toList());
-        JsonResponseMetadata meta = new JsonResponseMetadata(page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements());
+        JsonResponseMetadata meta = new JsonResponseMetadata(page.getSize(), page.getNumber(), page.getTotalPages(), page.getTotalElements());
         return new JsonPagedResponse<>(cast(result), meta);
     }
 

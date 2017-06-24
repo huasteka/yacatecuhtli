@@ -23,10 +23,12 @@ public class EntryService extends AbstractService {
     protected EntryConverter entryConverter;
 
     public EntryJson deposit(EntryJson entry) {
+        entry.setType(EntryType.DEPOSIT);
         return execute(entry);
     }
 
     public EntryJson withdraw(EntryJson entry) {
+        entry.setType(EntryType.WITHDRAW);
         return execute(entry);
     }
 
@@ -37,7 +39,7 @@ public class EntryService extends AbstractService {
     }
 
     public JsonPagedResponse<EntryJson> findByAccount(Integer accountId, Pageable pageable) {
-        return getPagedResponse(entryRepository.findAllByAccountId(accountId, pageable));
+        return getPagedResponse(entryRepository.findAllByAccountIdOrderByIssuedAtDesc(accountId, pageable));
     }
 
 }
