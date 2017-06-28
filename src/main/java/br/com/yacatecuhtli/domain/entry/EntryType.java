@@ -12,4 +12,9 @@ public enum EntryType {
     private EntryType(boolean type) {
         this.type = type;
     }
+
+    public static EntryType getReverseType(EntryType type) {
+        return type.isType() ? EntryType.WITHDRAW : EntryType.DEPOSIT;
+    }
+
 }

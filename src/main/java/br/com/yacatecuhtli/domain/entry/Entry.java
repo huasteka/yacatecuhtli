@@ -3,10 +3,7 @@ package br.com.yacatecuhtli.domain.entry;
 import br.com.yacatecuhtli.core.entity.VersionedEntity;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.payment.PaymentType;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -34,6 +31,11 @@ public class Entry extends VersionedEntity<EntryJson> {
     @Setter
     @Column
     private Date executedAt;
+
+    @Getter
+    @Setter
+    @Column
+    private Date revertedAt;
 
     @Getter
     @Setter
