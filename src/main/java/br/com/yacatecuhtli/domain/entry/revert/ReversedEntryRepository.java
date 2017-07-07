@@ -4,6 +4,8 @@ import br.com.yacatecuhtli.core.entity.EntityRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RevertedEntryRepository extends EntityRepository<RevertedEntry> {
+public interface ReversedEntryRepository extends EntityRepository<ReversedEntry> {
+
+    ReversedEntry findByReverseId(Integer reverseId);
 
 }

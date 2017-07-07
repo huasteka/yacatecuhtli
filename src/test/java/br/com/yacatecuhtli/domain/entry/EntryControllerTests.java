@@ -4,15 +4,16 @@ import br.com.yacatecuhtli.core.AbstractControllerSpec;
 import br.com.yacatecuhtli.core.json.JsonPagedResponse;
 import br.com.yacatecuhtli.core.json.JsonResponseFactory;
 import br.com.yacatecuhtli.core.json.JsonResponseMetadata;
-import br.com.yacatecuhtli.domain.account.AccountRepository;
+import br.com.yacatecuhtli.domain.entry.revert.EntryReversalJson;
+import br.com.yacatecuhtli.domain.entry.revert.ReversedEntryService;
 import br.com.yacatecuhtli.template.EntryTemplateLoader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
+import org.mockito.invocation.InvocationOnMock;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -27,6 +28,9 @@ public class EntryControllerTests extends AbstractControllerSpec {
 
     @MockBean
     private EntryService entryService;
+
+    @MockBean
+    private ReversedEntryService reversedEntryService;
 
     @Test
     public void shouldSendPostRequestToDeposit() throws Exception {
@@ -51,12 +55,19 @@ public class EntryControllerTests extends AbstractControllerSpec {
     }
 
     @Test
+    public void shouldSendDeleteRequestToReverse() throws Exception {
+        Integer entryId = 1;
+        this.getMvc().perform(MockMvcRequestBuilders.delete("/api/entries/reverse/{entryId}", entryId).contentType(getContentType()))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
     public void shouldSendGetRequestWithPagination() throws Exception {
         List<EntryJson> entryList = createObjectList(EntryJson.class, EntryTemplateLoader.VALID_ENTRY_TEMPLATE, 15);
         JsonPagedResponse<EntryJson> result = new JsonPagedResponse<>(entryList.subList(10, 14), new JsonResponseMetadata(10, 1, 2, 15L));
         BDDMockito.given(this.entryService.findByAccount(1, new PageRequest(1, 10))).willReturn(result);
         String json = new ObjectMapper().writeValueAsString(JsonResponseFactory.create(result));
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/api/entries/account/{accountId}", 1)
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/api/entries/accounts/{accountId}", 1)
                 .contentType(getContentType())
                 .param("currentPage", "1");
         this.getMvc().perform(request)

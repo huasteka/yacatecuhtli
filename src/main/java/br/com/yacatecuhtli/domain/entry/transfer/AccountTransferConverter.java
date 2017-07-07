@@ -1,5 +1,6 @@
 package br.com.yacatecuhtli.domain.entry.transfer;
 
+import br.com.yacatecuhtli.core.SystemTime;
 import br.com.yacatecuhtli.core.json.JsonConverter;
 import br.com.yacatecuhtli.domain.account.AccountRepository;
 import br.com.yacatecuhtli.domain.entry.Entry;
@@ -32,7 +33,7 @@ public class AccountTransferConverter extends JsonConverter<AccountTransferJson,
     public void update(AccountTransferJson source, TransferredEntry target) {
         target.setSource(createEntry(source.getSourceAccountId(), source.getPaymentTypeId(), source.getAmount(), EntryType.WITHDRAW));
         target.setTarget(createEntry(source.getTargetAccountId(), source.getPaymentTypeId(), source.getAmount(), EntryType.DEPOSIT));
-        target.setTransferredAt(getToday());
+        target.setTransferredAt(SystemTime.INSTANCE.now());
     }
 
     private Entry createEntry(Integer accountId, Integer paymentTypeId, BigDecimal amount, EntryType type) {
@@ -41,13 +42,9 @@ public class AccountTransferConverter extends JsonConverter<AccountTransferJson,
         source.setPaymentType(paymentTypeRepository.findOne(paymentTypeId));
         source.setGrossValue(amount);
         source.setNetValue(amount);
-        source.setExecutedAt(getToday());
+        source.setExecutedAt(SystemTime.INSTANCE.now());
         source.setType(type);
         return source;
-    }
-
-    private Date getToday() {
-        return Date.from(Instant.now());
     }
 
 }

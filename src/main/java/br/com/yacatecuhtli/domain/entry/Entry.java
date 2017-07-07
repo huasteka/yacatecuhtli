@@ -1,5 +1,6 @@
 package br.com.yacatecuhtli.domain.entry;
 
+import br.com.yacatecuhtli.core.SystemTime;
 import br.com.yacatecuhtli.core.entity.VersionedEntity;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.payment.PaymentType;
@@ -35,7 +36,7 @@ public class Entry extends VersionedEntity<EntryJson> {
     @Getter
     @Setter
     @Column
-    private Date revertedAt;
+    private Date reversedAt;
 
     @Getter
     @Setter
@@ -83,6 +84,7 @@ public class Entry extends VersionedEntity<EntryJson> {
                 .id(this.id)
                 .issuedAt(this.issuedAt)
                 .executedAt(this.executedAt)
+                .reversedAt(this.reversedAt)
                 .type(this.type)
                 .grossValue(this.grossValue)
                 .netValue(this.netValue)
@@ -96,7 +98,7 @@ public class Entry extends VersionedEntity<EntryJson> {
 
     @PrePersist
     protected void onCreate() {
-        this.issuedAt = Date.from(Instant.now());
+        this.issuedAt = SystemTime.INSTANCE.now();
     }
 
 }

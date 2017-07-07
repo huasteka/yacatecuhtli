@@ -12,12 +12,12 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RevertedEntryJson implements JsonRepresentation {
+public class ReversedEntryJson implements JsonRepresentation {
 
     private Integer id;
 
-    private EntryJson revert;
+    private EntryJson reverse;
 
-    private EntryJson reverted;
+    private EntryJson reversed;
 
 }

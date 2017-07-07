@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class RevertedEntry extends VersionedEntity<RevertedEntryJson> {
+public class ReversedEntry extends VersionedEntity<ReversedEntryJson> {
 
     @Getter
     @Id
@@ -23,19 +23,19 @@ public class RevertedEntry extends VersionedEntity<RevertedEntryJson> {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Entry revert;
+    private Entry reverse;
 
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, optional = false)
-    private Entry reverted;
+    private Entry reversed;
 
     @Override
-    public RevertedEntryJson toJson() {
-        return RevertedEntryJson.builder()
+    public ReversedEntryJson toJson() {
+        return ReversedEntryJson.builder()
                 .id(this.id)
-                .revert(this.revert.toJson())
-                .reverted(this.reverted.toJson())
+                .reverse(this.reverse.toJson())
+                .reversed(this.reversed.toJson())
                 .build();
     }
 

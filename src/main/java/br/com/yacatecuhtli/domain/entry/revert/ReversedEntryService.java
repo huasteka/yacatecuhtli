@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class RevertedEntryService extends AbstractService {
+public class ReversedEntryService extends AbstractService {
 
     @Autowired
-    protected RevertedEntryRepository revertedEntryRepository;
+    protected ReversedEntryRepository reversedEntryRepository;
 
     @Autowired
     protected EntryReversalConverter entryReversalConverter;
@@ -17,7 +17,7 @@ public class RevertedEntryService extends AbstractService {
     @Transactional
     public void reverse(EntryReversalJson entryReversal) {
         ensureThatEntryExists(entryReversal);
-        revertedEntryRepository.save(entryReversalConverter.convert(entryReversal));
+        reversedEntryRepository.save(entryReversalConverter.convert(entryReversal));
     }
 
     private void ensureThatEntryExists(EntryReversalJson entryReversal) {

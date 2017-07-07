@@ -24,6 +24,8 @@ public class EntryJson implements JsonRepresentation {
 
     protected Date executedAt;
 
+    protected Date reversedAt;
+
     protected EntryType type;
 
     protected BigDecimal grossValue;

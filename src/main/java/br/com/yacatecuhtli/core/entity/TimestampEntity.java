@@ -1,5 +1,6 @@
 package br.com.yacatecuhtli.core.entity;
 
+import br.com.yacatecuhtli.core.SystemTime;
 import br.com.yacatecuhtli.core.json.JsonRepresentation;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public abstract class TimestampEntity<J extends JsonRepresentation> extends Vers
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = Date.from(Instant.now());
+        this.createdAt = SystemTime.INSTANCE.now();
     }
 
 }

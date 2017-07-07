@@ -15,9 +15,9 @@ public class TransferredEntryService extends AbstractService {
     protected AccountTransferConverter accountTransferConverter;
 
     @Transactional
-    public void transfer(AccountTransferJson accountTransfer) {
+    public TransferredEntryJson transfer(AccountTransferJson accountTransfer) {
         validate(accountTransfer);
-        transferredEntryRepository.save(accountTransferConverter.convert(accountTransfer));
+        return transferredEntryRepository.save(accountTransferConverter.convert(accountTransfer)).toJson();
     }
 
     private void validate(AccountTransferJson accountTransfer) {

@@ -34,6 +34,7 @@ public class EntryConverter extends JsonConverter<EntryJson, Entry> {
         target.setDescription(source.getDescription());
         target.setIssuedAt(source.getIssuedAt());
         target.setExecutedAt(source.getExecutedAt());
+        target.setReversedAt(source.getReversedAt());
         Optional.ofNullable(source.getAccount()).ifPresent((account) -> target.setAccount(accountRepository.findOne(account.getId())));
         Optional.ofNullable(source.getPaymentType()).ifPresent((payment) -> target.setPaymentType(paymentTypeRepository.findOne(payment.getId())));
     }
