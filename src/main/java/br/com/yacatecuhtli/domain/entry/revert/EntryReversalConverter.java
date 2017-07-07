@@ -6,9 +6,6 @@ import br.com.yacatecuhtli.domain.entry.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.util.Date;
-
 @Component
 public class EntryReversalConverter extends JsonConverter<EntryReversalJson, ReversedEntry> {
 

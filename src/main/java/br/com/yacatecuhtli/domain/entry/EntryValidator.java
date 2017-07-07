@@ -22,10 +22,14 @@ public class EntryValidator {
     public void validate(EntryJson entry) {
         BusinessRuleException exception = new BusinessRuleException();
         ensureThatTypeIsNotBlank(entry, exception);
+        validateWithoutType(entry, exception);
+        exception.throwException();
+    }
+
+    public void validateWithoutType(EntryJson entry, BusinessRuleException exception) {
         ensureThatGrossValueIsGreaterThanZero(entry, exception);
         ensureThatPaymentTypeIsAvailable(entry, exception);
         ensureThatAccountIsAvailable(entry, exception);
-        exception.throwException();
     }
 
     private void ensureThatTypeIsNotBlank(EntryJson entry, BusinessRuleException exception) {

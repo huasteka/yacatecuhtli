@@ -6,6 +6,7 @@ import br.com.yacatecuhtli.domain.budget.category.BudgetCategory;
 import br.com.yacatecuhtli.domain.entry.EntryConverter;
 import br.com.yacatecuhtli.domain.entry.EntryJson;
 import br.com.yacatecuhtli.domain.entry.EntryType;
+import br.com.yacatecuhtli.domain.entry.EntryValidator;
 import br.com.yacatecuhtli.domain.payment.PaymentType;
 import br.com.yacatecuhtli.template.BudgetCategoryTemplateLoader;
 import br.com.yacatecuhtli.template.EntryTemplateLoader;
@@ -25,6 +26,9 @@ public class ScheduledEntryServiceTests extends AbstractRepositorySpec {
 
     @SpyBean
     protected EntryConverter entryConverter;
+
+    @SpyBean
+    protected EntryValidator entryValidator;
 
     @SpyBean
     protected ScheduledEntryConverter scheduledEntryConverter;

@@ -4,11 +4,13 @@ import br.com.yacatecuhtli.core.SystemTime;
 import br.com.yacatecuhtli.core.entity.VersionedEntity;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.payment.PaymentType;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
 
