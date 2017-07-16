@@ -1,9 +1,6 @@
 package br.com.yacatecuhtli.domain.budget.category;
 
-import br.com.yacatecuhtli.core.AbstractRepositorySpec;
-import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.domain.budget.group.BudgetGroup;
-import br.com.yacatecuhtli.domain.budget.group.BudgetGroupJson;
 import br.com.yacatecuhtli.template.BudgetCategoryTemplateLoader;
 import br.com.yacatecuhtli.template.BudgetGroupTemplateLoader;
 import com.github.javafaker.Faker;
@@ -12,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -20,13 +16,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class BudgetCategoryServiceTests extends AbstractRepositorySpec {
-
-    @SpyBean
-    private BudgetCategoryConverter budgetCategoryConverter;
-
-    @SpyBean
-    private BudgetCategoryService budgetCategoryService;
+public class BudgetCategoryServiceTests extends AbstractBudgetCategoryServiceTests {
 
     @Test
     public void shouldListBudgetCategorys() {
@@ -61,13 +51,6 @@ public class BudgetCategoryServiceTests extends AbstractRepositorySpec {
         Assert.assertThat(savedBudgetCategory.getId(), Matchers.notNullValue());
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotSaveDuplicatedName() {
-        BudgetCategory original = createPersistedObject(BudgetCategory.class, BudgetCategoryTemplateLoader.VALID_BUDGET_CATEGORY_TEMPLATE);
-        BudgetCategoryJson payload = BudgetCategoryJson.builder().name(original.getName()).build();
-        budgetCategoryService.save(payload);
-    }
-
     @Test
     public void shouldUpdateBudgetCategory() {
         BudgetCategoryJson payload = createPersistedObject(BudgetCategory.class, BudgetCategoryTemplateLoader.VALID_BUDGET_CATEGORY_TEMPLATE).toJson();
@@ -78,28 +61,17 @@ public class BudgetCategoryServiceTests extends AbstractRepositorySpec {
         Assert.assertThat(oldName, Matchers.not(Matchers.equalToIgnoringCase(updatedBudgetCategory.getName())));
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotUpdateBudgetCategoryWithoutGroup() {
-        BudgetCategoryJson payload = createPersistedObject(BudgetCategory.class, BudgetCategoryTemplateLoader.VALID_BUDGET_CATEGORY_TEMPLATE).toJson();
-        payload.setGroup(null);
-        budgetCategoryService.update(payload.getId(), payload);
+    @Test
+    public void shouldDeleteBudgetCategory() {
+        BudgetCategory budgetCategory = createPersistedObject(BudgetCategory.class, BudgetCategoryTemplateLoader.VALID_BUDGET_CATEGORY_TEMPLATE);
+        Integer budgetCategoryId = budgetCategory.getId();
+        Integer budgetGroupId = budgetCategory.getGroup().getId();
+
+        budgetCategoryService.destroy(budgetCategoryId);
+        BudgetCategory deleted = getObject(BudgetCategory.class, budgetCategoryId);
+        BudgetGroup exists = getObject(BudgetGroup.class, budgetGroupId);
+        Assert.assertThat(deleted, Matchers.nullValue());
+        Assert.assertThat(exists, Matchers.notNullValue());
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotUpdateBudgetCategoryWithInvalidGroup() {
-        BudgetCategoryJson payload = createPersistedObject(BudgetCategory.class, BudgetCategoryTemplateLoader.VALID_BUDGET_CATEGORY_TEMPLATE).toJson();
-        int budgetGroupId = payload.getGroup().getId();
-        payload.setGroup(BudgetGroupJson.builder().id(budgetGroupId + 1).build());
-        budgetCategoryService.update(payload.getId(), payload);
-    }
-
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotUpdateDuplicatedBudgetCategory() {
-        BudgetCategory original = createPersistedObject(BudgetCategory.class, BudgetCategoryTemplateLoader.VALID_BUDGET_CATEGORY_TEMPLATE);
-        BudgetCategory duplicated = createPersistedObject(BudgetCategory.class, BudgetCategoryTemplateLoader.VALID_BUDGET_CATEGORY_TEMPLATE);
-        BudgetCategoryJson payload = duplicated.toJson();
-        payload.setName(original.getName());
-        budgetCategoryService.update(duplicated.getId(), payload);
-    }
-    
 }

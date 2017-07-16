@@ -1,7 +1,5 @@
 package br.com.yacatecuhtli.domain.budget.group;
 
-import br.com.yacatecuhtli.core.AbstractRepositorySpec;
-import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.template.BudgetGroupTemplateLoader;
 import com.github.javafaker.Faker;
 import org.hamcrest.Matchers;
@@ -9,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -17,13 +14,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class BudgetGroupServiceTests extends AbstractRepositorySpec {
-
-    @SpyBean
-    private BudgetGroupConverter budgetGroupConverter;
-
-    @SpyBean
-    private BudgetGroupService budgetGroupService;
+public class BudgetGroupServiceTests extends AbstractBudgetGroupServiceTests {
 
     @Test
     public void shouldListBudgetGroups() {
@@ -56,13 +47,6 @@ public class BudgetGroupServiceTests extends AbstractRepositorySpec {
         Assert.assertThat(savedBudgetGroup.getId(), Matchers.notNullValue());
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotSaveDuplicatedName() {
-        BudgetGroup original = createPersistedObject(BudgetGroup.class, BudgetGroupTemplateLoader.VALID_BUDGET_GROUP_TEMPLATE);
-        BudgetGroupJson payload = BudgetGroupJson.builder().name(original.getName()).build();
-        budgetGroupService.save(payload);
-    }
-
     @Test
     public void shouldUpdateBudgetGroup() {
         BudgetGroupJson payload = createPersistedObject(BudgetGroup.class, BudgetGroupTemplateLoader.VALID_BUDGET_GROUP_TEMPLATE).toJson();
@@ -73,13 +57,11 @@ public class BudgetGroupServiceTests extends AbstractRepositorySpec {
         Assert.assertThat(oldName, Matchers.not(Matchers.equalToIgnoringCase(updatedBudgetGroup.getName())));
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotUpdateDuplicatedBudgetGroup() {
-        BudgetGroup original = createPersistedObject(BudgetGroup.class, BudgetGroupTemplateLoader.VALID_BUDGET_GROUP_TEMPLATE);
-        BudgetGroup duplicated = createPersistedObject(BudgetGroup.class, BudgetGroupTemplateLoader.VALID_BUDGET_GROUP_TEMPLATE);
-        BudgetGroupJson payload = duplicated.toJson();
-        payload.setName(original.getName());
-        budgetGroupService.update(duplicated.getId(), payload);
+    public void shouldDeleteBudgetGroup() {
+        Integer budgetGroupId = createPersistedObject(BudgetGroup.class, BudgetGroupTemplateLoader.VALID_BUDGET_GROUP_TEMPLATE).getId();
+        budgetGroupService.destroy(budgetGroupId);
+        BudgetGroup deleted = getObject(BudgetGroup.class, budgetGroupId);
+        Assert.assertThat(deleted, Matchers.nullValue());
     }
-    
+
 }

@@ -4,6 +4,7 @@ import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.core.service.AbstractService;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.AccountRepository;
+import br.com.yacatecuhtli.domain.account.balance.AccountBalanceService;
 import br.com.yacatecuhtli.domain.payment.PaymentType;
 import br.com.yacatecuhtli.domain.payment.PaymentTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,16 @@ public class TransferredEntryService extends AbstractService {
     @Autowired
     protected AccountTransferConverter accountTransferConverter;
 
+    @Autowired
+    protected AccountBalanceService accountBalanceService;
+
     @Transactional
     public TransferredEntryJson transfer(AccountTransferJson accountTransfer) {
         validate(accountTransfer);
-        return transferredEntryRepository.save(accountTransferConverter.convert(accountTransfer)).toJson();
+        TransferredEntry transferred = transferredEntryRepository.save(accountTransferConverter.convert(accountTransfer));
+        accountBalanceService.performOperation(transferred.getSource());
+        accountBalanceService.performOperation(transferred.getTarget());
+        return transferred.toJson();
     }
 
     private void validate(AccountTransferJson accountTransfer) {

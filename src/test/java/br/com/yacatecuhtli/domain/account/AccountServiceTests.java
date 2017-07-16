@@ -1,7 +1,5 @@
 package br.com.yacatecuhtli.domain.account;
 
-import br.com.yacatecuhtli.core.AbstractRepositorySpec;
-import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.template.AccountTemplateLoader;
 import com.github.javafaker.Faker;
 import org.hamcrest.Matchers;
@@ -17,13 +15,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class AccountServiceTests extends AbstractRepositorySpec {
-
-    @SpyBean
-    private AccountConverter accountConverter;
-
-    @SpyBean
-    private AccountService accountService;
+public class AccountServiceTests extends AbstractAccountServiceTests {
 
     @Test
     public void shouldListAccounts() {
@@ -56,13 +48,6 @@ public class AccountServiceTests extends AbstractRepositorySpec {
         Assert.assertThat(savedAccount.getId(), Matchers.notNullValue());
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotSaveDuplicatedName() {
-        Account original = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
-        AccountJson payload = AccountJson.builder().name(original.getName()).build();
-        accountService.save(payload);
-    }
-
     @Test
     public void shouldUpdateAccount() {
         AccountJson payload = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE).toJson();
@@ -73,13 +58,12 @@ public class AccountServiceTests extends AbstractRepositorySpec {
         Assert.assertThat(oldName, Matchers.not(Matchers.equalToIgnoringCase(updatedAccount.getName())));
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotUpdateDuplicatedAccount() {
-        Account original = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
-        Account duplicated = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
-        AccountJson payload = duplicated.toJson();
-        payload.setName(original.getName());
-        accountService.update(duplicated.getId(), payload);
+    @Test
+    public void shouldDeleteAccount() {
+        Integer accountId = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE).getId();
+        accountService.destroy(accountId);
+        Account deleted = getObject(Account.class, accountId);
+        Assert.assertThat(deleted, Matchers.nullValue());
     }
 
 }

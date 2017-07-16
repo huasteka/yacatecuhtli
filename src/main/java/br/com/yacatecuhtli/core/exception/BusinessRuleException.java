@@ -18,6 +18,11 @@ public class BusinessRuleException extends RuntimeException {
     @Getter
     private List<JsonErrorMessageHolder> errors = new ArrayList<>();
 
+    public BusinessRuleException(ErrorMessageCode errorMessage, Object... parameters) {
+        super();
+        this.addMessage(errorMessage, parameters);
+    }
+
     public BusinessRuleException addMessage(ErrorMessageCode errorMessage, Object... parameters) {
         this.errors.add(JsonErrorMessageHolder.createInstance(errorMessage.getMessageKey(), parameters));
         return this;

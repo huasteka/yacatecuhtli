@@ -1,6 +1,7 @@
 package br.com.yacatecuhtli.domain.entry.revert;
 
 import br.com.yacatecuhtli.core.AbstractRepositorySpec;
+import br.com.yacatecuhtli.domain.account.balance.AbstractAccountBalanceServiceTests;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryConverter;
 import br.com.yacatecuhtli.domain.entry.EntryType;
@@ -16,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class RevertedEntryServiceTests extends AbstractRepositorySpec {
+public class RevertedEntryServiceTests extends AbstractAccountBalanceServiceTests {
 
     @SpyBean
     protected EntryConverter entryConverter;

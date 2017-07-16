@@ -2,6 +2,7 @@ package br.com.yacatecuhtli.domain.entry;
 
 import br.com.yacatecuhtli.core.json.JsonPagedResponse;
 import br.com.yacatecuhtli.core.service.AbstractService;
+import br.com.yacatecuhtli.domain.account.balance.AccountBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class EntryService extends AbstractService {
     @Autowired
     protected EntryConverter entryConverter;
 
+    @Autowired
+    protected AccountBalanceService accountBalanceService;
+
     @Transactional
     public EntryJson deposit(EntryJson entry) {
         return execute(entry, EntryType.DEPOSIT);
@@ -34,8 +38,9 @@ public class EntryService extends AbstractService {
 
     private EntryJson execute(EntryJson entryJson, EntryType type) {
         validate(entryJson, type);
-        Entry entry = entryConverter.convert(entryJson);
-        return entryRepository.save(entry).toJson();
+        Entry entry = entryRepository.save(entryConverter.convert(entryJson));
+        accountBalanceService.performOperation(entry);
+        return entry.toJson();
     }
 
     @Transactional
@@ -44,7 +49,7 @@ public class EntryService extends AbstractService {
         List<Entry> result = entries.stream()
                 .map(entryConverter::convert)
                 .collect(Collectors.toList());
-        entryRepository.save(result);
+        entryRepository.save(result).forEach(accountBalanceService::performOperation);
     }
 
     private void validate(EntryJson entryJson, EntryType type) {

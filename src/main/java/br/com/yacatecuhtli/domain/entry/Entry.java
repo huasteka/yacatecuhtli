@@ -80,6 +80,15 @@ public class Entry extends VersionedEntity<EntryJson> {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private PaymentType paymentType;
 
+    @Transient
+    public BigDecimal getTotal() {
+        return Optional.ofNullable(this.netValue).orElse(this.grossValue.add(this.coalesce(this.addition)).subtract(this.coalesce(this.discount)));
+    }
+
+    private BigDecimal coalesce(BigDecimal value) {
+        return Optional.ofNullable(value).orElse(BigDecimal.ZERO);
+    }
+
     @Override
     public EntryJson toJson() {
         return EntryJson.builder()

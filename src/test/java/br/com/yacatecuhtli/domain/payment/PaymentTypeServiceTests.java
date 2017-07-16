@@ -1,10 +1,7 @@
 package br.com.yacatecuhtli.domain.payment;
 
-import br.com.yacatecuhtli.core.AbstractRepositorySpec;
-import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.AccountJson;
-import br.com.yacatecuhtli.domain.payment.terms.PaymentTermsConverter;
 import br.com.yacatecuhtli.template.AccountTemplateLoader;
 import br.com.yacatecuhtli.template.PaymentTypeTemplateLoader;
 import com.github.javafaker.Faker;
@@ -13,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -21,16 +17,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class PaymentTypeServiceTests extends AbstractRepositorySpec {
-
-    @SpyBean
-    private PaymentTypeConverter paymentTypeConverter;
-
-    @SpyBean
-    private PaymentTermsConverter paymentTermsConverter;
-
-    @SpyBean
-    private PaymentTypeService paymentTypeService;
+public class PaymentTypeServiceTests extends AbstractPaymentTypeServiceTests {
 
     @Test
     public void shouldListPaymentTypes() {
@@ -65,17 +52,6 @@ public class PaymentTypeServiceTests extends AbstractRepositorySpec {
         Assert.assertThat(savedPaymentType.getId(), Matchers.notNullValue());
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotSaveDuplicatedName() {
-        PaymentType original = createPersistedObject(PaymentType.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE);
-        PaymentTypeJson payload = PaymentTypeJson.builder()
-                .name(original.getName())
-                .terms(original.getTerms().toJson())
-                .paymentAccount(original.getPaymentAccount().toJson())
-                .build();
-        paymentTypeService.save(payload);
-    }
-
     @Test
     public void shouldUpdatePaymentType() {
         PaymentTypeJson payload = createPersistedObject(PaymentType.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE).toJson();
@@ -86,13 +62,12 @@ public class PaymentTypeServiceTests extends AbstractRepositorySpec {
         Assert.assertThat(oldName, Matchers.not(Matchers.equalToIgnoringCase(updatedPaymentType.getName())));
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotUpdateDuplicatedPaymentType() {
-        PaymentType original = createPersistedObject(PaymentType.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE);
-        PaymentType duplicated = createPersistedObject(PaymentType.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE);
-        PaymentTypeJson payload = duplicated.toJson();
-        payload.setName(original.getName());
-        paymentTypeService.update(duplicated.getId(), payload);
+    @Test
+    public void shouldDeletePaymentType() {
+        Integer paymentTypeId = createPersistedObject(PaymentType.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE).getId();
+        paymentTypeService.destroy(paymentTypeId);
+        PaymentType deleted = getObject(PaymentType.class, paymentTypeId);
+        Assert.assertThat(deleted, Matchers.nullValue());
     }
 
 }

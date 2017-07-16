@@ -1,6 +1,5 @@
 package br.com.yacatecuhtli.domain.entry;
 
-import br.com.yacatecuhtli.core.AbstractRepositorySpec;
 import br.com.yacatecuhtli.core.json.JsonPagedResponse;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.AccountJson;
@@ -15,60 +14,42 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class EntryServiceTests extends AbstractRepositorySpec {
-
-    @SpyBean
-    private EntryService entryService;
-
-    @SpyBean
-    private EntryConverter entryConverter;
-
-    @SpyBean
-    private EntryValidator entryValidator;
+public class EntryServiceTests extends AbstractEntryServiceTests {
 
     @Test
     public void shouldMakeDepositToAccount() {
-        AccountJson depositAccount = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE).toJson();
-        PaymentTypeJson depositPaymentType = createPersistedObject(PaymentType.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE).toJson();
-
-        EntryJson payload = createObject(EntryJson.class, EntryTemplateLoader.VALID_ENTRY_TEMPLATE);
-        payload.setType(EntryType.DEPOSIT);
-        payload.setAccount(depositAccount);
-        payload.setPaymentType(depositPaymentType);
-
-        Assert.assertThat(payload.getId(), Matchers.nullValue());
-        EntryJson savedEntry = this.entryService.deposit(payload);
-        Assert.assertThat(savedEntry, Matchers.notNullValue());
-        Assert.assertThat(savedEntry.getId(), Matchers.notNullValue());
-        Assert.assertThat(savedEntry.getAccount().getId(), Matchers.equalTo(depositAccount.getId()));
-        Assert.assertThat(savedEntry.getPaymentType().getId(), Matchers.equalTo(depositPaymentType.getId()));
+        doPerformOperation(EntryType.DEPOSIT, entryService::deposit);
     }
 
     @Test
     public void shouldMakeWithdrawFromAccount() {
-        AccountJson withdrawAccount = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE).toJson();
-        PaymentTypeJson withdrawPaymentType = createPersistedObject(PaymentType.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE).toJson();
+        doPerformOperation(EntryType.WITHDRAW, entryService::withdraw);
+    }
+
+    private void doPerformOperation(EntryType type, Function<EntryJson, EntryJson> functionTest) {
+        AccountJson operationAccount = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE).toJson();
+        PaymentTypeJson operationPaymentType = createPersistedObject(PaymentType.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE).toJson();
 
         EntryJson payload = createObject(EntryJson.class, EntryTemplateLoader.VALID_ENTRY_TEMPLATE);
-        payload.setType(EntryType.WITHDRAW);
-        payload.setAccount(withdrawAccount);
-        payload.setPaymentType(withdrawPaymentType);
+        payload.setType(type);
+        payload.setAccount(operationAccount);
+        payload.setPaymentType(operationPaymentType);
 
         Assert.assertThat(payload.getId(), Matchers.nullValue());
-        EntryJson savedEntry = this.entryService.withdraw(payload);
+        EntryJson savedEntry = functionTest.apply(payload);
         Assert.assertThat(savedEntry, Matchers.notNullValue());
         Assert.assertThat(savedEntry.getId(), Matchers.notNullValue());
-        Assert.assertThat(savedEntry.getAccount().getId(), Matchers.equalTo(withdrawAccount.getId()));
-        Assert.assertThat(savedEntry.getPaymentType().getId(), Matchers.equalTo(withdrawPaymentType.getId()));
+        Assert.assertThat(savedEntry.getAccount().getId(), Matchers.equalTo(operationAccount.getId()));
+        Assert.assertThat(savedEntry.getPaymentType().getId(), Matchers.equalTo(operationPaymentType.getId()));
     }
 
     @Test

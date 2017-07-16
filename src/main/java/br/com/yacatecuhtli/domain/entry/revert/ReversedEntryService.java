@@ -2,6 +2,7 @@ package br.com.yacatecuhtli.domain.entry.revert;
 
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.core.service.AbstractService;
+import br.com.yacatecuhtli.domain.account.balance.AccountBalanceService;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,14 @@ public class ReversedEntryService extends AbstractService {
     @Autowired
     protected EntryReversalConverter entryReversalConverter;
 
+    @Autowired
+    protected AccountBalanceService accountBalanceService;
+
     @Transactional
     public void reverse(EntryReversalJson entryReversal) {
         validate(entryReversal);
-        reversedEntryRepository.save(entryReversalConverter.convert(entryReversal));
+        ReversedEntry result = reversedEntryRepository.save(entryReversalConverter.convert(entryReversal));
+        accountBalanceService.performOperation(result.getReversed());
     }
 
     private void validate(EntryReversalJson entryReversal) {

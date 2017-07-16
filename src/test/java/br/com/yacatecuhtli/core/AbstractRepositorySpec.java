@@ -30,6 +30,12 @@ public abstract class AbstractRepositorySpec extends AbstractApplicationSpec {
         getHibernateSession().persist(entity);
     }
 
+    protected <E> void persist(List<E> entityList) {
+        for (E entity : entityList) {
+            getHibernateSession().persist(entity);
+        }
+    }
+
     private Session getHibernateSession() {
         return entityManager.getEntityManager().unwrap(Session.class);
     }

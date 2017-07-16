@@ -26,16 +26,16 @@ public class EntryValidator {
         exception.throwException();
     }
 
-    public void validateWithoutType(EntryJson entry, BusinessRuleException exception) {
-        ensureThatGrossValueIsGreaterThanZero(entry, exception);
-        ensureThatPaymentTypeIsAvailable(entry, exception);
-        ensureThatAccountIsAvailable(entry, exception);
-    }
-
     private void ensureThatTypeIsNotBlank(EntryJson entry, BusinessRuleException exception) {
         if (entry.getType() == null) {
             exception.addMessage(EntryMessageCode.ENTRY_TYPE_IS_BLANK);
         }
+    }
+
+    public void validateWithoutType(EntryJson entry, BusinessRuleException exception) {
+        ensureThatGrossValueIsGreaterThanZero(entry, exception);
+        ensureThatPaymentTypeIsAvailable(entry, exception);
+        ensureThatAccountIsAvailable(entry, exception);
     }
 
     private void ensureThatGrossValueIsGreaterThanZero(EntryJson entry, BusinessRuleException exception) {
