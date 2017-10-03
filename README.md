@@ -5,7 +5,7 @@
 [![Codacy grade](https://img.shields.io/codacy/grade/b324cad1175442aba9d46d20c9edad7e.svg?style=flat-square)](https://www.codacy.com/app/murilocosta/yacatecuhtli/dashboard)
 [![Codecov](https://img.shields.io/codecov/c/github/murilocosta/yacatecuhtli.svg?style=flat-square)](https://codecov.io/gh/murilocosta/yacatecuhtli)
 
-Yacatecuhtli is an open source lightweight financial management API.
+Yacatecuhtli is an open source lightweight financial management API developed with [Spring Boot](https://projects.spring.io/spring-boot).
 
 ## Setup
 

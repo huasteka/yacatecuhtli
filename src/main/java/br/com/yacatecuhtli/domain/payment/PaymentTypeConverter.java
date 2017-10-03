@@ -27,8 +27,8 @@ public class PaymentTypeConverter extends JsonConverter<PaymentTypeJson, Payment
     @Override
     public void update(PaymentTypeJson source, PaymentType target) {
         target.setName(source.getName());
-        Optional.ofNullable(source.getTerms()).ifPresent((terms) -> target.setTerms(paymentTermsConverter.convert(terms)));
-        Optional.ofNullable(source.getPaymentAccount()).ifPresent((account) -> target.setPaymentAccount(accountRepository.getOne(account.getId())));
+        Optional.ofNullable(source.getTerms()).map(paymentTermsConverter::convert).ifPresent(target::setTerms);
+        updateRelationship(accountRepository, source.getPaymentAccount(), target::setPaymentAccount);
     }
 
 }

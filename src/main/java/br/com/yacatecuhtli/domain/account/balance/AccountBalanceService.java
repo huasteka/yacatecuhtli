@@ -1,8 +1,8 @@
 package br.com.yacatecuhtli.domain.account.balance;
 
-import br.com.yacatecuhtli.core.SystemTime;
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.core.service.AbstractService;
+import br.com.yacatecuhtli.core.service.DateService;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryType;
@@ -20,6 +20,9 @@ public class AccountBalanceService extends AbstractService {
     @Autowired
     protected AccountBalanceRepository accountBalanceRepository;
 
+    @Autowired
+    protected DateService dateService;
+
     @Transactional
     public void performOperation(Entry entry) {
         AccountBalance accountBalance = createAccountBalanceIfNotExists(entry);
@@ -34,7 +37,7 @@ public class AccountBalanceService extends AbstractService {
     }
 
     private AccountBalance createAccountBalanceIfNotExists(Entry entry) {
-        DateTime now = new DateTime(SystemTime.INSTANCE.now());
+        DateTime now = new DateTime(dateService.getNow());
         AccountBalance accountBalance = accountBalanceRepository.findByAccountAndYearAndMonth(entry.getAccount(), now.getYear(), now.getMonthOfYear());
         if (accountBalance == null) {
             accountBalance = new AccountBalance();

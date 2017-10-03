@@ -37,6 +37,11 @@ public class PaymentType extends TimestampEntity<PaymentTypeJson> {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Account paymentAccount;
 
+    @Transient
+    public boolean hasPaymentTerms() {
+        return this.terms != null;
+    }
+
     @Override
     public PaymentTypeJson toJson() {
         return PaymentTypeJson.builder()

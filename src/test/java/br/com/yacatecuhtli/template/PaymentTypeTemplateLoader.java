@@ -20,7 +20,7 @@ public class PaymentTypeTemplateLoader extends AbstractTemplateLoader {
     public void load() {
         Rule paymentTermsRule = new Rule();
         paymentTermsRule.add("stagedPayment", FAKER.bool().bool());
-        paymentTermsRule.add("tax", new BigDecimal(FAKER.number().randomDouble(2, 0, 100)));
+        paymentTermsRule.add("tax", new BigDecimal(FAKER.number().randomDouble(2, 0, 20)));
         paymentTermsRule.add("installmentQuantity", FAKER.number().numberBetween(1, 10));
         paymentTermsRule.add("firstInstallmentTerm", FAKER.number().numberBetween(1, 30));
         paymentTermsRule.add("installmentTerm", FAKER.number().numberBetween(1, 30));

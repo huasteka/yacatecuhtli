@@ -2,6 +2,7 @@ package br.com.yacatecuhtli.domain.entry.revert;
 
 import br.com.yacatecuhtli.core.SystemTime;
 import br.com.yacatecuhtli.core.json.JsonConverter;
+import br.com.yacatecuhtli.core.service.DateService;
 import br.com.yacatecuhtli.domain.entry.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,9 @@ public class EntryReversalConverter extends JsonConverter<EntryReversalJson, Rev
 
     @Autowired
     protected EntryConverter entryConverter;
+
+    @Autowired
+    protected DateService dateService;
 
     @Override
     public ReversedEntry convert(EntryReversalJson source) {
@@ -29,7 +33,7 @@ public class EntryReversalConverter extends JsonConverter<EntryReversalJson, Rev
 
         EntryJson reversedEntry = entry.toJson();
         reversedEntry.setType(EntryType.getReverseType(entry.getType()));
-        reversedEntry.setReversedAt(SystemTime.INSTANCE.now());
+        reversedEntry.setReversedAt(dateService.getNow());
 
         target.setReverse(entry);
         target.setReversed(entryConverter.convert(reversedEntry));

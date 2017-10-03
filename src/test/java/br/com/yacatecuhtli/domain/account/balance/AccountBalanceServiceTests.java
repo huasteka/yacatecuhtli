@@ -1,6 +1,8 @@
 package br.com.yacatecuhtli.domain.account.balance;
 
 import br.com.yacatecuhtli.core.SystemTime;
+import br.com.yacatecuhtli.core.component.DateServiceTests;
+import br.com.yacatecuhtli.core.service.DateService;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryType;
@@ -13,6 +15,7 @@ import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 

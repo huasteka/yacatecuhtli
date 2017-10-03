@@ -7,6 +7,8 @@ import br.com.six2six.fixturefactory.base.Sequence;
 import br.com.yacatecuhtli.core.AbstractTemplateLoader;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.AccountJson;
+import br.com.yacatecuhtli.domain.budget.category.BudgetCategory;
+import br.com.yacatecuhtli.domain.budget.category.BudgetCategoryJson;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryJson;
 import br.com.yacatecuhtli.domain.entry.EntryType;
@@ -23,26 +25,29 @@ public class EntryTemplateLoader extends AbstractTemplateLoader {
 
     @Override
     public void load() {
-        Sequence<BigDecimal> bigDecimalSequence = () -> new BigDecimal(FAKER.number().randomDouble(2, 0, 10000)).setScale(2, RoundingMode.HALF_EVEN);
+        Sequence<BigDecimal> highValueSequence = () -> new BigDecimal(FAKER.number().randomDouble(2, 6000, 10000)).setScale(2, RoundingMode.HALF_EVEN);
+        Sequence<BigDecimal> lowerValueSequence = () -> new BigDecimal(FAKER.number().randomDouble(2, 0, 4000)).setScale(2, RoundingMode.HALF_EVEN);
 
         Rule baseRule = new Rule();
         baseRule.add("issuedAt", null);
         baseRule.add("executedAt", null);
         baseRule.add("type", baseRule.uniqueRandom(EntryType.class));
-        baseRule.add("grossValue", baseRule.sequence(bigDecimalSequence));
-        baseRule.add("netValue", baseRule.sequence(bigDecimalSequence));
-        baseRule.add("addition", baseRule.sequence(bigDecimalSequence));
-        baseRule.add("discount", baseRule.sequence(bigDecimalSequence));
+        baseRule.add("grossValue", baseRule.sequence(highValueSequence));
+        baseRule.add("netValue", baseRule.sequence(highValueSequence));
+        baseRule.add("addition", baseRule.sequence(lowerValueSequence));
+        baseRule.add("discount", baseRule.sequence(lowerValueSequence));
         baseRule.add("description", FAKER.lorem().sentence());
 
         Rule entityRule = new Rule();
         entityRule.add("account", entityRule.one(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE));
         entityRule.add("paymentType", entityRule.one(PaymentType.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE));
+        entityRule.add("category", entityRule.one(BudgetCategory.class, BudgetCategoryTemplateLoader.VALID_BUDGET_CATEGORY_TEMPLATE));
         Fixture.of(Entry.class).addTemplate(VALID_ENTRY_TEMPLATE, new Rule(baseRule, entityRule));
 
         Rule jsonRule = new Rule();
         jsonRule.add("account", jsonRule.one(AccountJson.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE));
         jsonRule.add("paymentType", jsonRule.one(PaymentTypeJson.class, PaymentTypeTemplateLoader.VALID_PAYMENT_TYPE_TEMPLATE));
+        jsonRule.add("category", jsonRule.one(BudgetCategoryJson.class, BudgetCategoryTemplateLoader.VALID_BUDGET_CATEGORY_TEMPLATE));
         Fixture.of(EntryJson.class).addTemplate(VALID_ENTRY_TEMPLATE, new Rule(baseRule, jsonRule));
     }
 

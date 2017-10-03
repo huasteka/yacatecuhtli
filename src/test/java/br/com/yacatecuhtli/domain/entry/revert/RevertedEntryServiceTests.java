@@ -1,6 +1,5 @@
 package br.com.yacatecuhtli.domain.entry.revert;
 
-import br.com.yacatecuhtli.core.AbstractRepositorySpec;
 import br.com.yacatecuhtli.domain.account.balance.AbstractAccountBalanceServiceTests;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryConverter;

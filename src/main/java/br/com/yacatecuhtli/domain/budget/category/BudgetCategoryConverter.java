@@ -23,7 +23,7 @@ public class BudgetCategoryConverter extends JsonConverter<BudgetCategoryJson, B
     @Override
     public void update(BudgetCategoryJson source, BudgetCategory target) {
         target.setName(source.getName());
-        Optional.ofNullable(source.getGroup()).ifPresent((group) -> target.setGroup(budgetGroupRepository.findOne(group.getId())));
+        updateRelationship(budgetGroupRepository, source.getGroup(), target::setGroup);
     }
 
 }

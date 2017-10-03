@@ -1,14 +1,16 @@
+
 package br.com.yacatecuhtli.core.service;
 
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Service
 public class DateService {
 
     public Date getNow() {
-        return new Date(System.currentTimeMillis());
+        return Date.from(Instant.now());
     }
 
     public Date addSecondsToDate(Date date, long secondsToAdd) {

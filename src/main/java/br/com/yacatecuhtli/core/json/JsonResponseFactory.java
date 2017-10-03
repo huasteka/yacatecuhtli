@@ -12,7 +12,7 @@ public class JsonResponseFactory {
 
     public static JsonResponse create(Object result, JsonResponseMetadata metadata) {
         JsonResponse jsonResponse = new JsonResponse();
-        jsonResponse.setResult(result);
+        jsonResponse.setData(result);
         jsonResponse.setMeta(metadata);
         return jsonResponse;
     }

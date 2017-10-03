@@ -27,9 +27,6 @@ public class EntryControllerTests extends AbstractControllerSpec {
     @MockBean
     private EntryService entryService;
 
-    @MockBean
-    private ReversedEntryService reversedEntryService;
-
     @Test
     public void shouldSendPostRequestToDeposit() throws Exception {
         EntryJson payload = createObject(EntryJson.class, EntryTemplateLoader.VALID_ENTRY_TEMPLATE);
@@ -50,13 +47,6 @@ public class EntryControllerTests extends AbstractControllerSpec {
         this.getMvc().perform(MockMvcRequestBuilders.post("/api/entries/withdraw").contentType(getContentType()).content(json))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().json(result));
-    }
-
-    @Test
-    public void shouldSendDeleteRequestToReverse() throws Exception {
-        Integer entryId = 1;
-        this.getMvc().perform(MockMvcRequestBuilders.delete("/api/entries/reverse/{entryId}", entryId).contentType(getContentType()))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
     @Test

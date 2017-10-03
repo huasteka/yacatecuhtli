@@ -2,6 +2,7 @@ package br.com.yacatecuhtli.domain.entry.transfer;
 
 import br.com.yacatecuhtli.core.SystemTime;
 import br.com.yacatecuhtli.core.json.JsonConverter;
+import br.com.yacatecuhtli.core.service.DateService;
 import br.com.yacatecuhtli.domain.account.AccountRepository;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryType;
@@ -20,6 +21,9 @@ public class AccountTransferConverter extends JsonConverter<AccountTransferJson,
     @Autowired
     protected PaymentTypeRepository paymentTypeRepository;
 
+    @Autowired
+    protected DateService dateService;
+
     @Override
     public TransferredEntry convert(AccountTransferJson source) {
         TransferredEntry transferredEntry = new TransferredEntry();
@@ -31,7 +35,7 @@ public class AccountTransferConverter extends JsonConverter<AccountTransferJson,
     public void update(AccountTransferJson source, TransferredEntry target) {
         target.setSource(createEntry(source.getSourceAccountId(), source.getPaymentTypeId(), source.getAmount(), EntryType.WITHDRAW));
         target.setTarget(createEntry(source.getTargetAccountId(), source.getPaymentTypeId(), source.getAmount(), EntryType.DEPOSIT));
-        target.setTransferredAt(SystemTime.INSTANCE.now());
+        target.setTransferredAt(dateService.getNow());
     }
 
     private Entry createEntry(Integer accountId, Integer paymentTypeId, BigDecimal amount, EntryType type) {
@@ -40,7 +44,7 @@ public class AccountTransferConverter extends JsonConverter<AccountTransferJson,
         source.setPaymentType(paymentTypeRepository.findOne(paymentTypeId));
         source.setGrossValue(amount);
         source.setNetValue(amount);
-        source.setExecutedAt(SystemTime.INSTANCE.now());
+        source.setExecutedAt(dateService.getNow());
         source.setType(type);
         return source;
     }

@@ -2,6 +2,7 @@ package br.com.yacatecuhtli.domain.entry;
 
 import br.com.yacatecuhtli.core.json.JsonRepresentation;
 import br.com.yacatecuhtli.domain.account.AccountJson;
+import br.com.yacatecuhtli.domain.budget.category.BudgetCategoryJson;
 import br.com.yacatecuhtli.domain.payment.PaymentTypeJson;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
@@ -42,5 +43,6 @@ public class EntryJson implements JsonRepresentation {
 
     protected PaymentTypeJson paymentType;
 
+    protected BudgetCategoryJson category;
 
 }

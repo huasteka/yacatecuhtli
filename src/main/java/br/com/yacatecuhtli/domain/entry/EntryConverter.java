@@ -2,11 +2,10 @@ package br.com.yacatecuhtli.domain.entry;
 
 import br.com.yacatecuhtli.core.json.JsonConverter;
 import br.com.yacatecuhtli.domain.account.AccountRepository;
+import br.com.yacatecuhtli.domain.budget.category.BudgetCategoryRepository;
 import br.com.yacatecuhtli.domain.payment.PaymentTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class EntryConverter extends JsonConverter<EntryJson, Entry> {
@@ -16,6 +15,9 @@ public class EntryConverter extends JsonConverter<EntryJson, Entry> {
 
     @Autowired
     protected PaymentTypeRepository paymentTypeRepository;
+
+    @Autowired
+    protected BudgetCategoryRepository budgetCategoryRepository;
 
     @Override
     public Entry convert(EntryJson source) {
@@ -35,8 +37,9 @@ public class EntryConverter extends JsonConverter<EntryJson, Entry> {
         target.setIssuedAt(source.getIssuedAt());
         target.setExecutedAt(source.getExecutedAt());
         target.setReversedAt(source.getReversedAt());
-        Optional.ofNullable(source.getAccount()).ifPresent((account) -> target.setAccount(accountRepository.findOne(account.getId())));
-        Optional.ofNullable(source.getPaymentType()).ifPresent((payment) -> target.setPaymentType(paymentTypeRepository.findOne(payment.getId())));
+        updateRelationship(accountRepository, source.getAccount(), target::setAccount);
+        updateRelationship(paymentTypeRepository, source.getPaymentType(), target::setPaymentType);
+        updateRelationship(budgetCategoryRepository, source.getCategory(), target::setCategory);
     }
 
 }
