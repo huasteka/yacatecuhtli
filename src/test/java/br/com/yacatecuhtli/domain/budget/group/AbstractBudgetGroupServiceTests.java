@@ -6,6 +6,9 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 public abstract class AbstractBudgetGroupServiceTests extends AbstractRepositorySpec {
 
     @SpyBean
+    protected BudgetGroupValidator budgetGroupValidator;
+
+    @SpyBean
     protected BudgetGroupConverter budgetGroupConverter;
 
     @SpyBean

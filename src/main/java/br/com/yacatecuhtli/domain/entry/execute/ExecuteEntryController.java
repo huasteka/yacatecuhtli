@@ -17,7 +17,8 @@ public class ExecuteEntryController extends AbstractRestController {
 
     @PostMapping("/api/entries/{entryId}/execute")
     public ResponseEntity<JsonResponse> execute(@PathVariable Integer entryId, @RequestBody EntryExecutionJson entryExecution) {
-        return withJson(executionService.executeEntry(entryId, entryExecution));
+        entryExecution.setEntryId(entryId);
+        return withJson(executionService.executeEntry(entryExecution));
     }
 
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/payment-types")
-public class PaymentTypeController extends AbstractCrudController<PaymentTypeJson, PaymentType, PaymentTypeConverter, PaymentTypeRepository, PaymentTypeService> {
+public class PaymentTypeController extends AbstractCrudController<PaymentTypeJson, PaymentType, PaymentTypeConverter, PaymentTypeRepository, PaymentTypeValidator, PaymentTypeService> {
 
     @Autowired
     public PaymentTypeController(PaymentTypeService entityService) {

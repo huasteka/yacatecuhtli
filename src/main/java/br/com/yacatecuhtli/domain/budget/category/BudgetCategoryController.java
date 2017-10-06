@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/budget-categories")
-public class BudgetCategoryController extends AbstractCrudController<BudgetCategoryJson, BudgetCategory, BudgetCategoryConverter, BudgetCategoryRepository, BudgetCategoryService> {
+public class BudgetCategoryController extends AbstractCrudController<BudgetCategoryJson, BudgetCategory, BudgetCategoryConverter, BudgetCategoryRepository, BudgetCategoryValidator, BudgetCategoryService> {
 
     @Autowired
     public BudgetCategoryController(BudgetCategoryService entityService) {

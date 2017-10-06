@@ -4,6 +4,7 @@ import br.com.yacatecuhtli.core.SystemTime;
 import br.com.yacatecuhtli.core.entity.VersionedEntity;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.budget.category.BudgetCategory;
+import br.com.yacatecuhtli.domain.entry.calculator.EntryCalculator;
 import br.com.yacatecuhtli.domain.payment.PaymentType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,7 +13,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Date;
 import java.util.Optional;
 
@@ -94,23 +94,7 @@ public class Entry extends VersionedEntity<EntryJson> {
 
     @Transient
     public BigDecimal getTotal() {
-        return Optional.ofNullable(this.netValue).orElse(this.calculateNetValue());
-    }
-
-    public BigDecimal calculateTaxValue() {
-        if (this.paymentType.hasPaymentTerms()) {
-            BigDecimal oneHundred = BigDecimal.TEN.multiply(BigDecimal.TEN);
-            return this.grossValue.multiply(this.coalesce(this.paymentType.getTerms().getTax()).divide(oneHundred, RoundingMode.HALF_EVEN));
-        }
-        return BigDecimal.ZERO;
-    }
-
-    public BigDecimal calculateNetValue() {
-        return this.grossValue.add(this.coalesce(this.addition)).subtract(this.coalesce(this.discount).subtract(this.coalesce(this.tax)));
-    }
-
-    private BigDecimal coalesce(BigDecimal value) {
-        return Optional.ofNullable(value).orElse(BigDecimal.ZERO);
+        return Optional.ofNullable(this.netValue).orElse(new EntryCalculator(this).calculateNetValue());
     }
 
     @Override

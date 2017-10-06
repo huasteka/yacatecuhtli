@@ -15,6 +15,8 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EntryExecutionJson {
 
+    private Integer entryId;
+
     private Integer budgetCategoryId;
 
     private BigDecimal addition;

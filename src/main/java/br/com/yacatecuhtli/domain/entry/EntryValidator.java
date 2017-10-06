@@ -1,6 +1,8 @@
 package br.com.yacatecuhtli.domain.entry;
 
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
+import br.com.yacatecuhtli.core.validator.Validator;
+import br.com.yacatecuhtli.core.validator.VoidValidator;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.AccountRepository;
 import br.com.yacatecuhtli.domain.payment.PaymentType;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Component
-public class EntryValidator {
+public class EntryValidator extends VoidValidator<EntryJson> {
 
     @Autowired
     protected AccountRepository accountRepository;
@@ -19,7 +21,8 @@ public class EntryValidator {
     @Autowired
     protected PaymentTypeRepository paymentTypeRepository;
 
-    public void validate(EntryJson entry) {
+    @Override
+    public void executeValidation(EntryJson entry) {
         BusinessRuleException exception = new BusinessRuleException();
         ensureThatTypeIsNotBlank(entry, exception);
         validateWithoutType(entry, exception);

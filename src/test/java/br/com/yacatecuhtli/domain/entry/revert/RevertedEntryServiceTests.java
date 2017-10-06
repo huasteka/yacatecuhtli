@@ -19,6 +19,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class RevertedEntryServiceTests extends AbstractAccountBalanceServiceTests {
 
     @SpyBean
+    protected ReversedEntryValidator reversedEntryValidator;
+
+    @SpyBean
     protected EntryConverter entryConverter;
 
     @SpyBean

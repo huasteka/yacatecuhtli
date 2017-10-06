@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/budget-groups")
-public class BudgetGroupController extends AbstractCrudController<BudgetGroupJson, BudgetGroup, BudgetGroupConverter, BudgetGroupRepository, BudgetGroupService> {
+public class BudgetGroupController extends AbstractCrudController<BudgetGroupJson, BudgetGroup, BudgetGroupConverter, BudgetGroupRepository, BudgetGroupValidator, BudgetGroupService> {
 
     @Autowired
     public BudgetGroupController(BudgetGroupService entityService) {

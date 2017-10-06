@@ -6,12 +6,13 @@ import br.com.yacatecuhtli.core.json.JsonConverter;
 import br.com.yacatecuhtli.core.json.JsonRepresentation;
 import br.com.yacatecuhtli.core.json.JsonResponse;
 import br.com.yacatecuhtli.core.service.AbstractCrudService;
+import br.com.yacatecuhtli.core.validator.CrudValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-public class AbstractCrudController<J extends JsonRepresentation, E extends PersistentEntity<J>, C extends JsonConverter<J, E>, R extends EntityRepository<E>, S extends AbstractCrudService<J, E, C, R>> extends AbstractRestController {
+public class AbstractCrudController<J extends JsonRepresentation, E extends PersistentEntity<J>, C extends JsonConverter<J, E>, R extends EntityRepository<E>, V extends CrudValidator<J>, S extends AbstractCrudService<J, E, C, R, V>> extends AbstractRestController {
 
     protected S entityService;
 

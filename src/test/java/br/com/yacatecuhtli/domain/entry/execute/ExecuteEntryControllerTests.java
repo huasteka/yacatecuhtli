@@ -27,8 +27,9 @@ public class ExecuteEntryControllerTests extends AbstractControllerSpec {
     @Test
     public void shouldSendPostRequestToExecuteEntry() throws Exception {
         EntryExecutionJson payload = createObject(EntryExecutionJson.class, ExecuteEntryTemplateLoader.VALID_EXECUTED_ENTRY_TEMPLATE);
+        payload.setEntryId(MOCK_ENTRY_ID);
         EntryJson resultJson = createObject(EntryJson.class, EntryTemplateLoader.VALID_ENTRY_TEMPLATE);
-        BDDMockito.given(this.executionService.executeEntry(MOCK_ENTRY_ID, payload)).willReturn(resultJson);
+        BDDMockito.given(this.executionService.executeEntry(payload)).willReturn(resultJson);
         String json = new ObjectMapper().writeValueAsString(payload);
         String result = new ObjectMapper().writeValueAsString(JsonResponseFactory.create(resultJson));
         this.getMvc().perform(MockMvcRequestBuilders.post("/api/entries/1/execute").contentType(getContentType()).content(json))

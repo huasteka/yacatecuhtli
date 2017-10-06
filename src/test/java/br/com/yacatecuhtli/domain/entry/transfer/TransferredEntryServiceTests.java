@@ -1,6 +1,5 @@
 package br.com.yacatecuhtli.domain.entry.transfer;
 
-import br.com.yacatecuhtli.core.AbstractRepositorySpec;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.balance.AbstractAccountBalanceServiceTests;
 import br.com.yacatecuhtli.domain.entry.EntryType;
@@ -20,6 +19,9 @@ import java.math.BigDecimal;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class TransferredEntryServiceTests extends AbstractAccountBalanceServiceTests {
+
+    @SpyBean
+    protected TransferredEntryValidator transferredEntryValidator;
 
     @SpyBean
     protected AccountTransferConverter accountTransferConverter;

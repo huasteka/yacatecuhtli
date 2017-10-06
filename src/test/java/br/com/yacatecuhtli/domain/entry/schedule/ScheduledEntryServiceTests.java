@@ -1,6 +1,5 @@
 package br.com.yacatecuhtli.domain.entry.schedule;
 
-import br.com.yacatecuhtli.core.AbstractRepositorySpec;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.balance.AbstractAccountBalanceServiceTests;
 import br.com.yacatecuhtli.domain.budget.category.BudgetCategory;
@@ -24,6 +23,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class ScheduledEntryServiceTests extends AbstractAccountBalanceServiceTests {
+
+    @SpyBean
+    protected ScheduledEntryValidator scheduledEntryValidator;
 
     @SpyBean
     protected EntryConverter entryConverter;

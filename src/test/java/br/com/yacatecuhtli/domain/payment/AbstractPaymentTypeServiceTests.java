@@ -7,6 +7,9 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 public abstract class AbstractPaymentTypeServiceTests extends AbstractRepositorySpec {
 
     @SpyBean
+    protected PaymentTypeValidator paymentTypeValidator;
+
+    @SpyBean
     protected PaymentTermsConverter paymentTermsConverter;
 
     @SpyBean

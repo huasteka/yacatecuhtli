@@ -1,6 +1,5 @@
 package br.com.yacatecuhtli.domain.entry.execute;
 
-import br.com.yacatecuhtli.core.service.DateService;
 import br.com.yacatecuhtli.domain.account.balance.AbstractAccountBalanceServiceTests;
 import br.com.yacatecuhtli.domain.budget.category.BudgetCategory;
 import br.com.yacatecuhtli.domain.entry.Entry;
@@ -22,6 +21,9 @@ import java.math.BigDecimal;
 public class ExecuteEntryServiceTests extends AbstractAccountBalanceServiceTests {
 
     @SpyBean
+    protected ExecuteEntryValidator executeEntryValidator;
+
+    @SpyBean
     protected ExecuteEntryService executeEntryService;
 
     @Test
@@ -33,7 +35,8 @@ public class ExecuteEntryServiceTests extends AbstractAccountBalanceServiceTests
         json.setBudgetCategoryId(budgetCategory.getId());
 
         Integer entryId = entry.getId();
-        executeEntryService.executeEntry(entryId, json);
+        json.setEntryId(entryId);
+        executeEntryService.executeEntry(json);
 
         Entry executed = getObject(Entry.class, entryId);
         Assert.assertThat(executed.getExecutedAt(), Matchers.notNullValue());

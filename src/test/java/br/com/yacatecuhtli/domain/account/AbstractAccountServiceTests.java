@@ -6,6 +6,9 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 public abstract class AbstractAccountServiceTests extends AbstractRepositorySpec {
 
     @SpyBean
+    protected AccountValidator accountValidator;
+
+    @SpyBean
     protected AccountConverter accountConverter;
 
     @SpyBean
