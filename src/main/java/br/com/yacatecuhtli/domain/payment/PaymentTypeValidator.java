@@ -2,6 +2,7 @@ package br.com.yacatecuhtli.domain.payment;
 
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.core.validator.CrudValidator;
+import br.com.yacatecuhtli.domain.payment.terms.PaymentTermsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -12,9 +13,15 @@ public class PaymentTypeValidator extends CrudValidator<PaymentTypeJson> {
     @Autowired
     private PaymentTypeRepository paymentTypeRepository;
 
+    @Autowired
+    private PaymentTermsValidator paymentTermsValidator;
+
     @Override
     public void executeValidation(PaymentTypeJson object) throws BusinessRuleException {
         ensureThatNameIsNotBlank(object);
+        if (object.hasPaymentTerms()) {
+            paymentTermsValidator.validate(object.getTerms());
+        }
     }
 
     @Override
@@ -23,17 +30,19 @@ public class PaymentTypeValidator extends CrudValidator<PaymentTypeJson> {
     }
 
     private void ensureThatNameIsNotBlank(PaymentTypeJson paymentTypeJson) {
+        BusinessRuleException exception = new BusinessRuleException();
         if (StringUtils.isEmpty(paymentTypeJson.getName())) {
-            new BusinessRuleException().addMessage(PaymentTypeMessageCode.PAYMENT_TYPE_NAME_IS_BLANK).throwException();
+            exception.addMessage(PaymentTypeMessageCode.PAYMENT_TYPE_NAME_IS_BLANK);
         } else {
-            ensureThatNameIsUnique(paymentTypeJson);
+            ensureThatNameIsUnique(exception, paymentTypeJson);
         }
+        exception.throwException();
     }
 
-    private void ensureThatNameIsUnique(PaymentTypeJson paymentTypeJson) {
+    private void ensureThatNameIsUnique(BusinessRuleException exception, PaymentTypeJson paymentTypeJson) {
         PaymentType exists = paymentTypeRepository.findByNameLikeIgnoreCase(paymentTypeJson.getName());
         if (exists != null && !exists.getId().equals(paymentTypeJson.getId())) {
-            new BusinessRuleException().addMessage(PaymentTypeMessageCode.PAYMENT_TYPE_NAME_NOT_AVAILABLE).throwException();
+            exception.addMessage(PaymentTypeMessageCode.PAYMENT_TYPE_NAME_NOT_AVAILABLE);
         }
     }
 

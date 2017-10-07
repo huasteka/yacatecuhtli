@@ -25,13 +25,13 @@ public class ScheduledEntryValidator extends VoidValidator<ScheduledEntryJson> {
     @Override
     public void executeValidation(ScheduledEntryJson scheduledEntry) throws BusinessRuleException {
         BusinessRuleException exception = new BusinessRuleException();
-        ensureThatCategoryIsNotNullAndExists(scheduledEntry, exception);
-        ensureThatEntryIsValid(scheduledEntry, exception);
-        ensureThatExecuteAtIsNotNull(scheduledEntry, exception);
+        ensureThatCategoryIsNotNullAndExists(exception, scheduledEntry);
+        ensureThatEntryIsValid(exception, scheduledEntry);
+        ensureThatExecuteAtIsNotNull(exception, scheduledEntry);
         exception.throwException();
     }
 
-    private void ensureThatCategoryIsNotNullAndExists(ScheduledEntryJson scheduledEntry, BusinessRuleException exception) {
+    private void ensureThatCategoryIsNotNullAndExists(BusinessRuleException exception, ScheduledEntryJson scheduledEntry) {
         if (scheduledEntry.getCategory() == null || scheduledEntry.getCategory().getId() == null) {
             exception.addMessage(ScheduledEntryMessageCode.SCHEDULED_ENTRY_CATEGORY_IS_BLANK);
         } else {
@@ -42,17 +42,17 @@ public class ScheduledEntryValidator extends VoidValidator<ScheduledEntryJson> {
         }
     }
 
-    private void ensureThatEntryIsValid(ScheduledEntryJson scheduledEntry, BusinessRuleException exception) {
+    private void ensureThatEntryIsValid(BusinessRuleException exception, ScheduledEntryJson scheduledEntry) {
         if (scheduledEntry.getEntry() == null) {
             exception.addMessage(ScheduledEntryMessageCode.SCHEDULED_ENTRY_ENTRY_IS_BLANK);
         } else if (scheduledEntry.getEntry().getId() != null) {
-            ensureThatEntryWasNotExecutedOrReversed(scheduledEntry, exception);
+            ensureThatEntryWasNotExecutedOrReversed(exception, scheduledEntry);
         } else {
-            entryValidator.validateWithoutType(scheduledEntry.getEntry(), exception);
+            entryValidator.validateWithoutType(exception, scheduledEntry.getEntry());
         }
     }
 
-    private void ensureThatEntryWasNotExecutedOrReversed(ScheduledEntryJson scheduledEntry, BusinessRuleException exception) {
+    private void ensureThatEntryWasNotExecutedOrReversed(BusinessRuleException exception, ScheduledEntryJson scheduledEntry) {
         Entry entry = entryRepository.getOne(scheduledEntry.getEntry().getId());
         if (entry.getExecutedAt() != null) {
             exception.addMessage(ScheduledEntryMessageCode.SCHEDULED_ENTRY_ENTRY_HAS_BEEN_EXECUTED);
@@ -61,7 +61,7 @@ public class ScheduledEntryValidator extends VoidValidator<ScheduledEntryJson> {
         }
     }
 
-    private void ensureThatExecuteAtIsNotNull(ScheduledEntryJson scheduledEntry, BusinessRuleException exception) {
+    private void ensureThatExecuteAtIsNotNull(BusinessRuleException exception, ScheduledEntryJson scheduledEntry) {
         if (scheduledEntry.getExecuteAt() == null) {
             exception.addMessage(ScheduledEntryMessageCode.SCHEDULED_ENTRY_EXECUTE_AT_IS_BLANK);
         }

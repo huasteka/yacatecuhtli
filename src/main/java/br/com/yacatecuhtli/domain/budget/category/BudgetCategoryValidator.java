@@ -19,8 +19,10 @@ public class BudgetCategoryValidator extends CrudValidator<BudgetCategoryJson> {
 
     @Override
     public void executeValidation(BudgetCategoryJson jsonRepresentation) throws BusinessRuleException {
-        ensureThatNameIsNotBlank(jsonRepresentation);
-        ensureGroupIsNotBlank(jsonRepresentation);
+        BusinessRuleException exception = new BusinessRuleException();
+        ensureThatNameIsNotBlank(exception, jsonRepresentation);
+        ensureGroupIsNotBlank(exception, jsonRepresentation);
+        exception.throwException();
     }
 
     @Override
@@ -28,33 +30,33 @@ public class BudgetCategoryValidator extends CrudValidator<BudgetCategoryJson> {
         ensureThatExists(entityId);
     }
 
-    private void ensureThatNameIsNotBlank(BudgetCategoryJson budgetCategoryJson) {
+    private void ensureThatNameIsNotBlank(BusinessRuleException exception, BudgetCategoryJson budgetCategoryJson) {
         if (StringUtils.isEmpty(budgetCategoryJson.getName())) {
-            new BusinessRuleException().addMessage(BudgetCategoryMessageCode.BUDGET_CATEGORY_NAME_IS_BLANK).throwException();
+            exception.addMessage(BudgetCategoryMessageCode.BUDGET_CATEGORY_NAME_IS_BLANK);
         } else {
-            ensureThatNameIsUnique(budgetCategoryJson);
+            ensureThatNameIsUnique(exception, budgetCategoryJson);
         }
     }
 
-    private void ensureThatNameIsUnique(BudgetCategoryJson budgetCategoryJson) {
+    private void ensureThatNameIsUnique(BusinessRuleException exception, BudgetCategoryJson budgetCategoryJson) {
         BudgetCategory exists = budgetCategoryRepository.findByNameLikeIgnoreCase(budgetCategoryJson.getName());
         if (exists != null && !exists.getId().equals(budgetCategoryJson.getId())) {
-            new BusinessRuleException().addMessage(BudgetCategoryMessageCode.BUDGET_CATEGORY_NAME_NOT_AVAILABLE).throwException();
+            exception.addMessage(BudgetCategoryMessageCode.BUDGET_CATEGORY_NAME_NOT_AVAILABLE);
         }
     }
 
-    private void ensureGroupIsNotBlank(BudgetCategoryJson budgetCategoryJson) {
+    private void ensureGroupIsNotBlank(BusinessRuleException exception, BudgetCategoryJson budgetCategoryJson) {
         if (budgetCategoryJson.getGroup() == null || budgetCategoryJson.getGroup().getId() == null) {
-            new BusinessRuleException().addMessage(BudgetCategoryMessageCode.BUDGET_CATEGORY_GROUP_IS_BLANK).throwException();
+            exception.addMessage(BudgetCategoryMessageCode.BUDGET_CATEGORY_GROUP_IS_BLANK);
         } else if (budgetCategoryJson.getGroup().getId() != null) {
-            ensureGroupExists(budgetCategoryJson);
+            ensureGroupExists(exception, budgetCategoryJson);
         }
     }
 
-    private void ensureGroupExists(BudgetCategoryJson budgetCategoryJson) {
+    private void ensureGroupExists(BusinessRuleException exception, BudgetCategoryJson budgetCategoryJson) {
         BudgetGroup exists = budgetGroupRepository.findOne(budgetCategoryJson.getGroup().getId());
         if (exists == null) {
-            new BusinessRuleException().addMessage(BudgetCategoryMessageCode.BUDGET_CATEGORY_GROUP_NOT_AVAILABLE).throwException();
+            exception.addMessage(BudgetCategoryMessageCode.BUDGET_CATEGORY_GROUP_NOT_AVAILABLE);
         }
     }
 

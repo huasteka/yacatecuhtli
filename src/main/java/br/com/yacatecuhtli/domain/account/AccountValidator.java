@@ -24,17 +24,19 @@ public class AccountValidator extends CrudValidator<AccountJson> {
     }
 
     private void ensureThatNameIsNotBlank(AccountJson accountJson) {
+        BusinessRuleException exception = new BusinessRuleException();
         if (StringUtils.isEmpty(accountJson.getName())) {
-            new BusinessRuleException().addMessage(AccountMessageCode.ACCOUNT_NAME_IS_BLANK).throwException();
+            exception.addMessage(AccountMessageCode.ACCOUNT_NAME_IS_BLANK);
         } else {
-            ensureThatNameIsUnique(accountJson);
+            ensureThatNameIsUnique(exception, accountJson);
         }
+        exception.throwException();
     }
 
-    private void ensureThatNameIsUnique(AccountJson accountJson) {
+    private void ensureThatNameIsUnique(BusinessRuleException exception, AccountJson accountJson) {
         Account exists = accountRepository.findByNameLikeIgnoreCase(accountJson.getName());
         if (exists != null && !exists.getId().equals(accountJson.getId())) {
-            new BusinessRuleException().addMessage(AccountMessageCode.ACCOUNT_NAME_NOT_AVAILABLE).throwException();
+            exception.addMessage(AccountMessageCode.ACCOUNT_NAME_NOT_AVAILABLE);
         }
     }
 

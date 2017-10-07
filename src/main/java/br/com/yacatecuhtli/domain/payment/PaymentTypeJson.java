@@ -23,4 +23,8 @@ public class PaymentTypeJson implements JsonRepresentation {
 
     protected AccountJson paymentAccount;
 
+    public boolean hasPaymentTerms() {
+        return terms != null;
+    }
+
 }

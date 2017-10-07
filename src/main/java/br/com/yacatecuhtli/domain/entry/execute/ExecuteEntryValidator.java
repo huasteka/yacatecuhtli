@@ -1,12 +1,13 @@
 package br.com.yacatecuhtli.domain.entry.execute;
 
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
+import br.com.yacatecuhtli.core.exception.ErrorMessageCode;
 import br.com.yacatecuhtli.core.validator.Validator;
 import br.com.yacatecuhtli.domain.budget.category.BudgetCategory;
 import br.com.yacatecuhtli.domain.budget.category.BudgetCategoryRepository;
-import br.com.yacatecuhtli.domain.entry.calculator.CalculatedEntry;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryRepository;
+import br.com.yacatecuhtli.domain.entry.calculator.CalculatedEntry;
 import br.com.yacatecuhtli.domain.entry.calculator.EntryCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -53,7 +54,7 @@ public class ExecuteEntryValidator implements Validator<EntryExecutionJson, Calc
         }
     }
 
-    private void ensureIsNotLesserThanZero(BusinessRuleException exception, ExecuteEntryMessageCode errorMessage, BigDecimal value) {
+    private void ensureIsNotLesserThanZero(BusinessRuleException exception, ErrorMessageCode errorMessage, BigDecimal value) {
         if (isLessThanZero(value)) {
             exception.addMessage(errorMessage);
         }

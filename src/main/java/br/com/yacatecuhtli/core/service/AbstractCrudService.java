@@ -32,9 +32,9 @@ public abstract class AbstractCrudService<J extends JsonRepresentation, E extend
     }
 
     @Transactional
-    public void update(Integer accountId, J jsonRepresentation) {
+    public void update(Integer entityId, J jsonRepresentation) {
         validator.validate(jsonRepresentation);
-        E entity = entityRepository.findOne(accountId);
+        E entity = entityRepository.findOne(entityId);
         jsonConverter.update(jsonRepresentation, entity);
         entityRepository.save(entity);
     }

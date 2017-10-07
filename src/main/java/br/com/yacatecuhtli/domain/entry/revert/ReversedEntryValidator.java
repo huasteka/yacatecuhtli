@@ -19,20 +19,20 @@ public class ReversedEntryValidator extends VoidValidator<EntryReversalJson> {
     @Override
     public void executeValidation(EntryReversalJson entryReversal) throws BusinessRuleException {
         BusinessRuleException exception = new BusinessRuleException();
-        ensureThatEntryExists(entryReversal.getEntryId(), exception);
+        ensureThatEntryExists(exception, entryReversal.getEntryId());
         exception.throwException();
     }
 
-    private void ensureThatEntryExists(Integer reverseEntryId, BusinessRuleException exception) {
+    private void ensureThatEntryExists(BusinessRuleException exception, Integer reverseEntryId) {
         Entry toReverse = entryRepository.findOne(reverseEntryId);
         if (toReverse == null) {
             exception.addMessage(ReversedEntryMessageCode.REVERSED_ENTRY_ENTRY_DOES_NOT_EXISTS);
         } else {
-            ensureThatEntryWasNotReversed(reverseEntryId, exception);
+            ensureThatEntryWasNotReversed(exception, reverseEntryId);
         }
     }
 
-    private void ensureThatEntryWasNotReversed(Integer reverseEntryId, BusinessRuleException exception) {
+    private void ensureThatEntryWasNotReversed(BusinessRuleException exception, Integer reverseEntryId) {
         ReversedEntry isReversed = reversedEntryRepository.findByReverseId(reverseEntryId);
         if (isReversed != null) {
             exception.addMessage(ReversedEntryMessageCode.REVERSED_ENTRY_ENTRY_CANNOT_BE_REVERSED);

@@ -23,17 +23,19 @@ public class BudgetGroupValidator extends CrudValidator<BudgetGroupJson> {
     }
 
     private void ensureThatNameIsNotBlank(BudgetGroupJson budgetGroupJson) {
+        BusinessRuleException exception = new BusinessRuleException();
         if (StringUtils.isEmpty(budgetGroupJson.getName())) {
-            new BusinessRuleException().addMessage(BudgetGroupMessageCode.BUDGET_GROUP_NAME_IS_BLANK).throwException();
+            exception.addMessage(BudgetGroupMessageCode.BUDGET_GROUP_NAME_IS_BLANK);
         } else {
-            ensureThatNameIsUnique(budgetGroupJson);
+            ensureThatNameIsUnique(exception, budgetGroupJson);
         }
+        exception.throwException();
     }
 
-    private void ensureThatNameIsUnique(BudgetGroupJson budgetGroupJson) {
+    private void ensureThatNameIsUnique(BusinessRuleException exception, BudgetGroupJson budgetGroupJson) {
         BudgetGroup exists = budgetGroupRepository.findByNameLikeIgnoreCase(budgetGroupJson.getName());
         if (exists != null && !exists.getId().equals(budgetGroupJson.getId())) {
-            new BusinessRuleException().addMessage(BudgetGroupMessageCode.BUDGET_GROUP_NAME_NOT_AVAILABLE).throwException();
+            exception.addMessage(BudgetGroupMessageCode.BUDGET_GROUP_NAME_NOT_AVAILABLE);
         }
     }
 
