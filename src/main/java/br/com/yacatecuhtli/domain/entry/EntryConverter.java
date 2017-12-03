@@ -29,6 +29,7 @@ public class EntryConverter extends JsonConverter<EntryJson, Entry> {
     @Override
     public void update(EntryJson source, Entry target) {
         target.setType(source.getType());
+        target.setCode(source.getCode());
         target.setGrossValue(source.getGrossValue());
         target.setAddition(source.getAddition());
         target.setDiscount(source.getDiscount());

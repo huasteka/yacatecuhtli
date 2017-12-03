@@ -29,6 +29,7 @@ public class EntryTemplateLoader extends AbstractTemplateLoader {
         Sequence<BigDecimal> lowerValueSequence = () -> new BigDecimal(FAKER.number().randomDouble(2, 0, 4000)).setScale(2, RoundingMode.HALF_EVEN);
 
         Rule baseRule = new Rule();
+        baseRule.add("code", baseRule.uniqueRandom(FAKER.lorem().words(10).toArray()));
         baseRule.add("issuedAt", null);
         baseRule.add("executedAt", null);
         baseRule.add("type", baseRule.uniqueRandom(EntryType.class));

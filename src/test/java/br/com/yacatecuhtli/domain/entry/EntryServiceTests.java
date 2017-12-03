@@ -72,6 +72,19 @@ public class EntryServiceTests extends AbstractEntryServiceTests {
         Assert.assertThat(result.getResult().get(1), Matchers.equalTo(entryList.get(11).toJson()));
     }
 
+    @Test
+    public void shouldFindEntriesByCode() {
+        String fixedCode = "THIS1IS2FORTUNE3CODE4";
+        List<Entry> entryList = createPersistedObjectList(Entry.class, EntryTemplateLoader.VALID_ENTRY_TEMPLATE, 5);
+        entryList.forEach(e -> e.setCode(fixedCode));
+        persist(entryList);
+
+        List<EntryJson> result = this.entryService.findByCode(fixedCode);
+        Assert.assertThat(result, Matchers.notNullValue());
+        Assert.assertThat(result.size(), Matchers.equalTo(5));
+        result.forEach(r -> Assert.assertThat(r.getCode(), Matchers.equalTo(fixedCode)));
+    }
+
     private void normalizeCommonValues(Entry entry, Account account, Date issuedDate) {
         entry.setAccount(account);
         entry.setIssuedAt(DateUtils.addDays(issuedDate, 1));

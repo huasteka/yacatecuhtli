@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,6 +61,15 @@ public class EntryService extends AbstractService {
 
     public JsonPagedResponse<EntryJson> findByAccount(Integer accountId, Pageable pageable) {
         return getPagedResponse(entryRepository.findAllByAccountIdOrderByIssuedAtDesc(accountId, pageable));
+    }
+
+    public List<EntryJson> findByCode(String entryCode) {
+        List<Entry> entries = entryRepository.findAllByCodeOrderByIssuedAtDesc(entryCode);
+        return Optional.ofNullable(entries)
+                .orElseGet(ArrayList::new)
+                .stream()
+                .map(Entry::toJson)
+                .collect(Collectors.toList());
     }
 
 }

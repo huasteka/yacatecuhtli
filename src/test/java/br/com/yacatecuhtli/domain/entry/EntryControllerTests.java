@@ -2,6 +2,7 @@ package br.com.yacatecuhtli.domain.entry;
 
 import br.com.yacatecuhtli.core.AbstractControllerSpec;
 import br.com.yacatecuhtli.core.json.JsonPagedResponse;
+import br.com.yacatecuhtli.core.json.JsonResponse;
 import br.com.yacatecuhtli.core.json.JsonResponseFactory;
 import br.com.yacatecuhtli.core.json.JsonResponseMetadata;
 import br.com.yacatecuhtli.domain.entry.revert.ReversedEntryService;
@@ -61,6 +62,17 @@ public class EntryControllerTests extends AbstractControllerSpec {
         this.getMvc().perform(request)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(json));
+    }
+
+    @Test
+    public void shouldSendGetRequestWithCode() throws Exception {
+        String fixedCode = "THIS1IS2FORTUNE3CODE4";
+        List<EntryJson> entryList = createObjectList(EntryJson.class, EntryTemplateLoader.VALID_ENTRY_TEMPLATE, 10);
+        String json = new ObjectMapper().writeValueAsString(JsonResponseFactory.create(entryList));
+        BDDMockito.given(this.entryService.findByCode(fixedCode)).willReturn(entryList);
+        this.getMvc().perform(MockMvcRequestBuilders.get("/api/entries/search-code/{entryCode}", fixedCode).contentType(getContentType()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().json(json));
     }
 
 }

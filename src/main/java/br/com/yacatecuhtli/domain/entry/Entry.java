@@ -29,6 +29,11 @@ public class Entry extends VersionedEntity<EntryJson> {
 
     @Getter
     @Setter
+    @Column(length = 100)
+    private String code;
+
+    @Getter
+    @Setter
     @Column(nullable = false)
     private Date issuedAt;
 
@@ -101,6 +106,7 @@ public class Entry extends VersionedEntity<EntryJson> {
     public EntryJson toJson() {
         return EntryJson.builder()
                 .id(this.id)
+                .code(this.code)
                 .issuedAt(this.issuedAt)
                 .executedAt(this.executedAt)
                 .reversedAt(this.reversedAt)

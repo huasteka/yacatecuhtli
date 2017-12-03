@@ -31,4 +31,9 @@ public class EntryController extends AbstractRestController {
         return withJson(entryService.findByAccount(accountId, new PageRequest(pagination.getCurrentPage(), pagination.getPageSize())));
     }
 
+    @GetMapping("/search-code/{entryCode}")
+    public ResponseEntity<JsonResponse> findByCode(@PathVariable String entryCode) {
+        return withJson(entryService.findByCode(entryCode));
+    }
+
 }

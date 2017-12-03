@@ -21,6 +21,8 @@ public class EntryJson implements JsonRepresentation {
 
     protected Integer id;
 
+    protected String code;
+
     protected Date issuedAt;
 
     protected Date executedAt;
