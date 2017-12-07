@@ -5,11 +5,6 @@ SET standard_conforming_strings = ON;
 SET check_function_bodies = FALSE;
 SET client_min_messages = WARNING;
 
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-SET search_path = public, pg_catalog;
-SET default_with_oids = FALSE;
-
 CREATE SEQUENCE hibernate_sequence
 START WITH 1
 INCREMENT BY 1

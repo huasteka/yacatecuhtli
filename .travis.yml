@@ -5,5 +5,8 @@ env:
   - CODECLIMATE_REPO_TOKEN: a461c195ea03663c41ce8ee9501d06da3070bd84c91ca03ee7087e65bd4bf58d
 before_install:
   - chmod +x mvnw
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
 after_success:
+  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r target/site/jacoco/jacoco.xml
   - bash <(curl -s https://codecov.io/bash)
