@@ -2,8 +2,8 @@
 
 [![Travis](https://img.shields.io/travis/murilocosta/yacatecuhtli.svg?style=flat-square)](https://travis-ci.org/murilocosta/yacatecuhtli)
 [![GitHub issues](https://img.shields.io/github/issues/murilocosta/yacatecuhtli.svg?style=flat-square)](https://github.com/murilocosta/yacatecuhtli/issues)
-[![Codacy grade](https://img.shields.io/codacy/grade/b324cad1175442aba9d46d20c9edad7e.svg?style=flat-square)](https://www.codacy.com/app/murilocosta/yacatecuhtli/dashboard)
-[![Codecov](https://img.shields.io/codecov/c/github/murilocosta/yacatecuhtli.svg?style=flat-square)](https://codecov.io/gh/murilocosta/yacatecuhtli)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ea81edfce0004d3bb57114db0673773d)](https://www.codacy.com/app/murilocosta/yacatecuhtli?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=murilocosta/yacatecuhtli&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/ea81edfce0004d3bb57114db0673773d)](https://www.codacy.com/app/murilocosta/yacatecuhtli?utm_source=github.com&utm_medium=referral&utm_content=murilocosta/yacatecuhtli&utm_campaign=Badge_Coverage)
 
 Yacatecuhtli is an open source lightweight financial management API developed with [Spring Boot](https://projects.spring.io/spring-boot).
 

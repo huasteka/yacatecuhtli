@@ -1,5 +1,6 @@
 package br.com.yacatecuhtli.core.message;
 
+import br.com.yacatecuhtli.core.exception.ErrorMessageCode;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
@@ -25,6 +26,11 @@ public class MessageService {
 
     public String getMessage(String messageKey, Object... parameters) {
         return getMessageSource().getMessage(messageKey, parameters, LocaleContextHolder.getLocale());
+    }
+
+    public JsonErrorMessage getMessage(ErrorMessageCode errorCode, Object... parameters) {
+        String message = getMessage(errorCode.getMessageKey(), parameters);
+        return new JsonErrorMessage(errorCode.getMessageKey(), message);
     }
 
     public void addMessageList(List<JsonErrorMessageHolder> messageList) {

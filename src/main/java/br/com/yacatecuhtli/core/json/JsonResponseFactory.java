@@ -2,6 +2,8 @@ package br.com.yacatecuhtli.core.json;
 
 import br.com.yacatecuhtli.core.message.JsonErrorMessage;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class JsonResponseFactory {
@@ -12,7 +14,7 @@ public class JsonResponseFactory {
 
     public static JsonResponse create(Object result, JsonResponseMetadata metadata) {
         JsonResponse jsonResponse = new JsonResponse();
-        jsonResponse.setData(result);
+        jsonResponse.setAttributes(result);
         jsonResponse.setMeta(metadata);
         return jsonResponse;
     }
@@ -25,6 +27,10 @@ public class JsonResponseFactory {
         JsonResponse jsonResponse = new JsonResponse();
         jsonResponse.setErrors(errors);
         return jsonResponse;
+    }
+
+    public static JsonResponse create(JsonErrorMessage error) {
+        return create(Collections.singletonList(error));
     }
 
 }

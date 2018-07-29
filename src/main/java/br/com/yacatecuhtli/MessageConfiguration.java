@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
 @Configuration
 public class MessageConfiguration {
 
-    private static final String MESSAGE_SOURCE_BASENAME = "classpath:i18n/errors";
+    private static final String MESSAGE_SOURCE_BASENAME = "classpath:i18n/messages";
 
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {

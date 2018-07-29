@@ -19,7 +19,7 @@ import java.util.Optional;
 @JsonInclude(Include.NON_NULL)
 public class JsonResponse {
 
-    protected Object data;
+    protected Object attributes;
 
     protected JsonResponseMetadata meta;
 
