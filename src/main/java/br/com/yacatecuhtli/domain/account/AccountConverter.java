@@ -16,6 +16,7 @@ public class AccountConverter extends JsonConverter<AccountJson, Account> {
     @Override
     public void update(AccountJson source, Account target) {
         target.setName(source.getName());
+        target.setCode(source.getCode());
     }
 
 }

@@ -15,7 +15,7 @@ public class AccountValidator extends CrudValidator<AccountJson> {
 
     @Override
     public void executeValidation(AccountJson accountJson) throws BusinessRuleException {
-        ensureThatNameIsNotBlank(accountJson);
+        ensureThatIsValid(accountJson);
     }
 
     @Override
@@ -23,14 +23,34 @@ public class AccountValidator extends CrudValidator<AccountJson> {
         ensureThatExists(entityId);
     }
 
-    private void ensureThatNameIsNotBlank(AccountJson accountJson) {
+    private void ensureThatIsValid(AccountJson accountJson) {
         BusinessRuleException exception = new BusinessRuleException();
+        ensureThatCodeIsNotBlank(exception, accountJson);
+        ensureThatNameIsNotBlank(exception, accountJson);
+        exception.throwException();
+    }
+
+    private void ensureThatCodeIsNotBlank(BusinessRuleException exception, AccountJson accountJson) {
+        if (StringUtils.isEmpty(accountJson.getCode())) {
+            exception.addMessage(AccountMessageCode.ACCOUNT_CODE_IS_BLANK);
+        } else {
+            ensureThatCodeIsUnique(exception, accountJson);
+        }
+    }
+
+    private void ensureThatCodeIsUnique(BusinessRuleException exception, AccountJson accountJson) {
+        Account exists = accountRepository.findByCodeLikeIgnoreCase(accountJson.getCode());
+        if (exists != null && !exists.getId().equals(accountJson.getId())) {
+            exception.addMessage(AccountMessageCode.ACCOUNT_CODE_NOT_AVAILABLE);
+        }
+    }
+
+    private void ensureThatNameIsNotBlank(BusinessRuleException exception, AccountJson accountJson) {
         if (StringUtils.isEmpty(accountJson.getName())) {
             exception.addMessage(AccountMessageCode.ACCOUNT_NAME_IS_BLANK);
         } else {
             ensureThatNameIsUnique(exception, accountJson);
         }
-        exception.throwException();
     }
 
     private void ensureThatNameIsUnique(BusinessRuleException exception, AccountJson accountJson) {

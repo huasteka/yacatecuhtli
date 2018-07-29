@@ -13,7 +13,8 @@ public class AccountTemplateLoader extends AbstractTemplateLoader {
     @Override
     public void load() {
         Rule accountRule = new Rule();
-        accountRule.add("name", accountRule.uniqueRandom(FAKER.lorem().words(30).toArray()));
+        accountRule.add("name", accountRule.uniqueRandom(FAKER.lorem().words(50).toArray()));
+        accountRule.add("code", accountRule.uniqueRandom(FAKER.lorem().words(10).toArray()));
 
         Fixture.of(Account.class).addTemplate(VALID_ACCOUNT_TEMPLATE, accountRule);
         Fixture.of(AccountJson.class).addTemplate(VALID_ACCOUNT_TEMPLATE, accountRule);

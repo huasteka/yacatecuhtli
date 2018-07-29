@@ -15,6 +15,8 @@ public class AccountJson implements JsonRepresentation {
 
     protected Integer id;
 
+    protected String code;
+
     protected String name;
 
 }

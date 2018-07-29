@@ -18,6 +18,13 @@ public class AccountRepositoryTests extends AbstractRepositorySpec {
     private AccountRepository accountRepository;
 
     @Test
+    public void shouldFindByCode() {
+        Account account = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
+        Account savedAccount = this.accountRepository.findByCodeLikeIgnoreCase(account.getCode().toUpperCase());
+        Assert.assertThat(savedAccount.getId(), Matchers.equalTo(account.getId()));
+    }
+
+    @Test
     public void shouldFindByName() {
         Account account = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
         Account savedAccount = this.accountRepository.findByNameLikeIgnoreCase(account.getName().toUpperCase());

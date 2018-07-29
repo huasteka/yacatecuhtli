@@ -21,12 +21,17 @@ public class Account extends TimestampEntity<AccountJson> {
 
     @Getter
     @Setter
+    @Column(nullable = false, length = 10)
+    private String code;
+
+    @Getter
+    @Setter
     @Column(nullable = false, length = 50)
     private String name;
 
     @Override
     public AccountJson toJson() {
-        return AccountJson.builder().id(this.id).name(this.name).build();
+        return AccountJson.builder().id(this.id).code(this.code).name(this.name).build();
     }
 
 }
