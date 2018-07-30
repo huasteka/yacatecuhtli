@@ -28,7 +28,7 @@ public class AccountServiceValidationTests extends AbstractAccountServiceTests {
     @Test(expected = BusinessRuleException.class)
     public void shouldNotSaveDuplicatedCode() {
         Account original = createPersistedObject(Account.class, AccountTemplateLoader.VALID_ACCOUNT_TEMPLATE);
-        AccountJson payload = AccountJson.builder().name(original.getCode()).build();
+        AccountJson payload = AccountJson.builder().code(original.getCode()).build();
         accountService.save(payload);
     }
 

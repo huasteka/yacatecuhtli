@@ -7,4 +7,12 @@ public abstract class AbstractTemplateLoader implements TemplateLoader {
 
     protected static final Faker FAKER = new Faker();
 
+    protected Object[] generateRandomWords(int quantity, int min, int max) {
+        Object[] generatedWords = new Object[quantity];
+        for (int i = 0; i < quantity; i++) {
+            generatedWords[i] = FAKER.lorem().characters(min, max);
+        }
+        return generatedWords;
+    }
+
 }
