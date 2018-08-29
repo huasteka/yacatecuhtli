@@ -1,0 +1,17 @@
+{
+  "package": "private",
+  "name": "yacatecuhtli",
+  "version": "1.0.0",
+  "description": "An open source lightweight financial management API",
+  "scripts": {
+    "postinstall": "./node_modules/.bin/apidoc -i ./src/main/java/br/com/yacatecuhtli/domain -o ./src/main/resources/static"
+  },
+  "license": "GPLv3",
+  "apidoc": {
+    "title": "Yacatecuhtli",
+    "url": "https://yacatecuhtli.herokuapp.com/api"
+  },
+  "dependencies": {
+    "apidoc": "^0.17.5"
+  }
+}
