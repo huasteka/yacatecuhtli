@@ -17,7 +17,8 @@ CREATE TABLE account (
   row_version INTEGER               NOT NULL,
   created_at  TIMESTAMP WITHOUT TIME ZONE,
   updated_at  TIMESTAMP WITHOUT TIME ZONE,
-  name        CHARACTER VARYING(50) NOT NULL
+  name        CHARACTER VARYING(50) NOT NULL,
+  code        CHARACTER VARYING(10) NOT NULL
 );
 
 CREATE TABLE account_balance (

@@ -6,12 +6,16 @@
   "scripts": {
     "postinstall": "./node_modules/.bin/apidoc -i ./src/main/java/br/com/yacatecuhtli/domain -o ./src/main/resources/static"
   },
-  "license": "GPLv3",
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/murilocosta/yacatecuhtli.git"
+  },
   "apidoc": {
     "title": "Yacatecuhtli",
     "url": "https://yacatecuhtli.herokuapp.com/api"
   },
   "dependencies": {
-    "apidoc": "^0.17.5"
+    "apidoc": "~0.17.5"
   }
 }
