@@ -52,7 +52,7 @@ public class EntryValidator extends VoidValidator<EntryJson> {
     private void ensureThatPaymentTypeIsAvailable(BusinessRuleException exception, EntryJson entry) {
         if (entry.getPaymentType() == null || entry.getPaymentType().getId() == null) {
             exception.addMessage(EntryMessageCode.ENTRY_PAYMENT_TYPE_IS_BLANK);
-        } else if (paymentTypeRepository.exists(entry.getPaymentType().getId())) {
+        } else if (!paymentTypeRepository.exists(entry.getPaymentType().getId())) {
             exception.addMessage(EntryMessageCode.ENTRY_PAYMENT_TYPE_NOT_AVAILABLE);
         }
     }
@@ -60,7 +60,7 @@ public class EntryValidator extends VoidValidator<EntryJson> {
     private void ensureThatAccountIsAvailable(BusinessRuleException exception, EntryJson entry) {
         if (entry.getAccount() == null || entry.getAccount().getId() == null) {
             exception.addMessage(EntryMessageCode.ENTRY_ACCOUNT_IS_BLANK);
-        } else if (accountRepository.exists(entry.getAccount().getId())) {
+        } else if (!accountRepository.exists(entry.getAccount().getId())) {
             exception.addMessage(EntryMessageCode.ENTRY_ACCOUNT_NOT_AVAILABLE);
         }
     }
