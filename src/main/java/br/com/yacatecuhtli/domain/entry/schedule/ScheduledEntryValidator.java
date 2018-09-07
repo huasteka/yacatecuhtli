@@ -48,7 +48,7 @@ public class ScheduledEntryValidator extends VoidValidator<ScheduledEntryJson> {
         } else if (scheduledEntry.getEntry().getId() != null) {
             ensureThatEntryWasNotExecutedOrReversed(exception, scheduledEntry);
         } else {
-            entryValidator.validateWithoutType(exception, scheduledEntry.getEntry());
+            entryValidator.executeValidation(exception, scheduledEntry.getEntry());
         }
     }
 

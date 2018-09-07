@@ -1,41 +1,40 @@
 /**
- * @api {get} /accounts Fetch a collection of accounts
+ * @api {get} /accounts Fetch account list
  * @apiVersion 1.0.0
  * @apiGroup Account
  * @apiName GetAccounts
  * @apiHeader {String} Authorization User generated JWT token
- *
- * @apiSuccess {Object[]} accounts
- * @apiSuccess {Number}   accounts.id
- * @apiSuccess {String}   accounts.code
- * @apiSuccess {String}   accounts.name
- *
- * @apiSuccessExample {json} Success-Response:
- *  HTTP/1.1 200 OK
- *  {
- *    "attributes": [
- *      {
- *        "id": "1"
- *        "code": "A001"
- *        "name": "Example"
- *      },
- *      {
- *        "id": "2"
- *        "code": "A002"
- *        "name": "Example 2"
- *      },
- *    ]
- *  }
- *
- * @apiError Y001 User is not authenticated
- *
- * @apiErrorExample {json} Error-Response:
- *  HTTP/1.1 401 Unauthorized
- *  {
- *    "errors": [
- *      "messageKey": "Y001",
- *      "message": "User is not authenticated"
- *    ]
- *  }
+ */
+
+/**
+ * @api {get} /accounts/:id Fetch account
+ * @apiVersion 1.0.0
+ * @apiGroup Account
+ * @apiName GetAccount
+ * @apiHeader {String} Authorization User generated JWT token
+ */
+
+/**
+ * @api {post} /accounts Create account
+ * @apiVersion 1.0.0
+ * @apiGroup Account
+ * @apiName CreateAccount
+ * @apiHeader {String} Authorization Generated JWT token
+ */
+
+/**
+ * @api {put} /accounts/:id Update account
+ * @apiVersion 1.0.0
+ * @apiGroup Account
+ * @apiName UpdateAccount
+ * @apiHeader {String} Authorization User generated JWT token
+ */
+
+/**
+ * @api {delete} /accounts/:id Delete account
+ * @apiVersion 1.0.0
+ * @apiGroup Account
+ * @apiName DeleteAccount
+ * @apiHeader {String} Authorization User generated JWT token
  */
 package br.com.yacatecuhtli.domain.account;
