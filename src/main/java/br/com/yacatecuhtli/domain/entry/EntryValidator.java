@@ -1,27 +1,29 @@
 package br.com.yacatecuhtli.domain.entry;
 
-import br.com.yacatecuhtli.core.exception.BusinessRuleException;
-import br.com.yacatecuhtli.core.validator.Validator;
-import br.com.yacatecuhtli.core.validator.VoidValidator;
-import br.com.yacatecuhtli.domain.account.Account;
-import br.com.yacatecuhtli.domain.account.AccountRepository;
-import br.com.yacatecuhtli.domain.payment.PaymentType;
-import br.com.yacatecuhtli.domain.payment.PaymentTypeRepository;
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import br.com.yacatecuhtli.core.exception.BusinessRuleException;
+import br.com.yacatecuhtli.core.validator.VoidValidator;
+import br.com.yacatecuhtli.domain.account.AccountRepository;
+import br.com.yacatecuhtli.domain.payment.PaymentTypeRepository;
 
 @Component
 public class EntryValidator extends VoidValidator<EntryJson> {
 
-    @Autowired
     protected AccountRepository accountRepository;
 
-    @Autowired
     protected PaymentTypeRepository paymentTypeRepository;
+    
+    @Autowired
+    public EntryValidator(AccountRepository accountRepository, PaymentTypeRepository paymentTypeRepository) {
+		this.accountRepository = accountRepository;
+		this.paymentTypeRepository = paymentTypeRepository;
+	}
 
-    @Override
+	@Override
     public void executeValidation(EntryJson entry) {
         BusinessRuleException exception = new BusinessRuleException();
         executeValidation(exception, entry);

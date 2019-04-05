@@ -11,13 +11,17 @@ import org.springframework.util.StringUtils;
 @Component
 public class BudgetCategoryValidator extends CrudValidator<BudgetCategoryJson> {
 
-    @Autowired
     private BudgetCategoryRepository budgetCategoryRepository;
 
-    @Autowired
     private BudgetGroupRepository budgetGroupRepository;
 
-    @Override
+    @Autowired
+    public BudgetCategoryValidator(BudgetCategoryRepository budgetCategoryRepository, BudgetGroupRepository budgetGroupRepository) {
+		this.budgetCategoryRepository = budgetCategoryRepository;
+		this.budgetGroupRepository = budgetGroupRepository;
+	}
+
+	@Override
     public void executeValidation(BudgetCategoryJson jsonRepresentation) throws BusinessRuleException {
         BusinessRuleException exception = new BusinessRuleException();
         ensureThatNameIsNotBlank(exception, jsonRepresentation);

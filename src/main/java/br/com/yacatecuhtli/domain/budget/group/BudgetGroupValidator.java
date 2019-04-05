@@ -1,18 +1,23 @@
 package br.com.yacatecuhtli.domain.budget.group;
 
-import br.com.yacatecuhtli.core.exception.BusinessRuleException;
-import br.com.yacatecuhtli.core.validator.CrudValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import br.com.yacatecuhtli.core.exception.BusinessRuleException;
+import br.com.yacatecuhtli.core.validator.CrudValidator;
+
 @Component
 public class BudgetGroupValidator extends CrudValidator<BudgetGroupJson> {
 
-    @Autowired
     private BudgetGroupRepository budgetGroupRepository;
 
-    @Override
+    @Autowired
+    public BudgetGroupValidator(BudgetGroupRepository budgetGroupRepository) {
+		this.budgetGroupRepository = budgetGroupRepository;
+	}
+
+	@Override
     public void executeValidation(BudgetGroupJson jsonRepresentation) throws BusinessRuleException {
         ensureThatNameIsNotBlank(jsonRepresentation);
     }

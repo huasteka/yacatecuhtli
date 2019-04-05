@@ -1,26 +1,31 @@
 package br.com.yacatecuhtli.domain.entry.transfer;
 
+import java.math.BigDecimal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.core.validator.VoidValidator;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.account.AccountRepository;
 import br.com.yacatecuhtli.domain.payment.PaymentType;
 import br.com.yacatecuhtli.domain.payment.PaymentTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
 
 @Component
 public class TransferredEntryValidator extends VoidValidator<AccountTransferJson> {
 
-    @Autowired
     protected AccountRepository accountRepository;
 
-    @Autowired
     protected PaymentTypeRepository paymentTypeRepository;
 
-    @Override
+    @Autowired
+    public TransferredEntryValidator(AccountRepository accountRepository, PaymentTypeRepository paymentTypeRepository) {
+		this.accountRepository = accountRepository;
+		this.paymentTypeRepository = paymentTypeRepository;
+	}
+
+	@Override
     public void executeValidation(AccountTransferJson accountTransfer) throws BusinessRuleException {
         BusinessRuleException exception = new BusinessRuleException();
         ensureThatSourceAccountIsNotNull(accountTransfer, exception);

@@ -10,13 +10,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReversedEntryValidator extends VoidValidator<EntryReversalJson> {
 
-    @Autowired
-    protected EntryRepository entryRepository;
+	protected EntryRepository entryRepository;
 
-    @Autowired
     protected ReversedEntryRepository reversedEntryRepository;
 
-    @Override
+    @Autowired
+    public ReversedEntryValidator(EntryRepository entryRepository, ReversedEntryRepository reversedEntryRepository) {
+		this.entryRepository = entryRepository;
+		this.reversedEntryRepository = reversedEntryRepository;
+	}
+
+	@Override
     public void executeValidation(EntryReversalJson entryReversal) throws BusinessRuleException {
         BusinessRuleException exception = new BusinessRuleException();
         ensureThatEntryExists(exception, entryReversal.getEntryId());

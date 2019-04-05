@@ -1,5 +1,8 @@
 package br.com.yacatecuhtli.domain.entry.schedule;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.core.validator.VoidValidator;
 import br.com.yacatecuhtli.domain.budget.category.BudgetCategory;
@@ -7,22 +10,28 @@ import br.com.yacatecuhtli.domain.budget.category.BudgetCategoryRepository;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryRepository;
 import br.com.yacatecuhtli.domain.entry.EntryValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class ScheduledEntryValidator extends VoidValidator<ScheduledEntryJson> {
 
-    @Autowired
     private BudgetCategoryRepository budgetCategoryRepository;
 
-    @Autowired
-    private EntryRepository entryRepository;
+	private EntryRepository entryRepository;
 
-    @Autowired
     private EntryValidator entryValidator;
+    
+    @Autowired
+    public ScheduledEntryValidator(
+    		BudgetCategoryRepository budgetCategoryRepository, 
+    		EntryRepository entryRepository,
+			EntryValidator entryValidator
+	) {
+		this.budgetCategoryRepository = budgetCategoryRepository;
+		this.entryRepository = entryRepository;
+		this.entryValidator = entryValidator;
+	}
 
-    @Override
+	@Override
     public void executeValidation(ScheduledEntryJson scheduledEntry) throws BusinessRuleException {
         BusinessRuleException exception = new BusinessRuleException();
         ensureThatCategoryIsNotNullAndExists(exception, scheduledEntry);

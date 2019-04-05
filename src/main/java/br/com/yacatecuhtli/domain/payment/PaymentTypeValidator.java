@@ -1,22 +1,27 @@
 package br.com.yacatecuhtli.domain.payment;
 
-import br.com.yacatecuhtli.core.exception.BusinessRuleException;
-import br.com.yacatecuhtli.core.validator.CrudValidator;
-import br.com.yacatecuhtli.domain.payment.terms.PaymentTermsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import br.com.yacatecuhtli.core.exception.BusinessRuleException;
+import br.com.yacatecuhtli.core.validator.CrudValidator;
+import br.com.yacatecuhtli.domain.payment.terms.PaymentTermsValidator;
+
 @Component
 public class PaymentTypeValidator extends CrudValidator<PaymentTypeJson> {
 
-    @Autowired
     private PaymentTypeRepository paymentTypeRepository;
 
-    @Autowired
     private PaymentTermsValidator paymentTermsValidator;
 
-    @Override
+    @Autowired
+    public PaymentTypeValidator(PaymentTypeRepository paymentTypeRepository, PaymentTermsValidator paymentTermsValidator) {
+		this.paymentTypeRepository = paymentTypeRepository;
+		this.paymentTermsValidator = paymentTermsValidator;
+	}
+
+	@Override
     public void executeValidation(PaymentTypeJson object) throws BusinessRuleException {
         ensureThatNameIsNotBlank(object);
         if (object.hasPaymentTerms()) {

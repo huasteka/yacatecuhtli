@@ -16,13 +16,17 @@ import java.math.BigDecimal;
 @Component
 public class ExecuteEntryValidator implements Validator<EntryExecutionJson, CalculatedEntry> {
 
-    @Autowired
     protected EntryRepository entryRepository;
 
-    @Autowired
     protected BudgetCategoryRepository budgetCategoryRepository;
 
-    @Override
+    @Autowired
+    public ExecuteEntryValidator(EntryRepository entryRepository, BudgetCategoryRepository budgetCategoryRepository) {
+		this.entryRepository = entryRepository;
+		this.budgetCategoryRepository = budgetCategoryRepository;
+	}
+
+	@Override
     public CalculatedEntry validate(EntryExecutionJson entryExecution) {
         ensureBudgetCategoryIsValid(entryExecution);
         Entry entry = ensureEntryIsValid(entryExecution);
