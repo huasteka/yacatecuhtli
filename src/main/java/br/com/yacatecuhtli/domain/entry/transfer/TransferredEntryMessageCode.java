@@ -1,8 +1,11 @@
 package br.com.yacatecuhtli.domain.entry.transfer;
 
 import br.com.yacatecuhtli.core.exception.ErrorMessageCode;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum TransferredEntryMessageCode implements ErrorMessageCode {
 
     TRANSFERRED_ENTRY_SOURCE_ACCOUNT_IS_BLANK("transferred-entry.account.source.error.is-blank"),
@@ -15,9 +18,5 @@ public enum TransferredEntryMessageCode implements ErrorMessageCode {
 
     @Getter
     private String messageKey;
-
-    private TransferredEntryMessageCode(String messageKey) {
-        this.messageKey = messageKey;
-    }
 
 }

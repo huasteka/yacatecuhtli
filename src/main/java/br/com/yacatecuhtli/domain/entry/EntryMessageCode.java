@@ -1,8 +1,11 @@
 package br.com.yacatecuhtli.domain.entry;
 
 import br.com.yacatecuhtli.core.exception.ErrorMessageCode;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum EntryMessageCode implements ErrorMessageCode {
 
     ENTRY_TYPE_IS_BLANK("entry.type.error.is-blank"),
@@ -15,9 +18,5 @@ public enum EntryMessageCode implements ErrorMessageCode {
 
     @Getter
     private String messageKey;
-
-    private EntryMessageCode(String messageKey) {
-        this.messageKey = messageKey;
-    }
 
 }

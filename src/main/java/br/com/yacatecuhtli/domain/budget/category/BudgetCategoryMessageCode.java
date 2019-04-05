@@ -1,8 +1,11 @@
 package br.com.yacatecuhtli.domain.budget.category;
 
 import br.com.yacatecuhtli.core.exception.ErrorMessageCode;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum BudgetCategoryMessageCode implements ErrorMessageCode {
 
     BUDGET_CATEGORY_NAME_IS_BLANK("budget-category.name.error.is-blank"),
@@ -13,10 +16,6 @@ public enum BudgetCategoryMessageCode implements ErrorMessageCode {
 
     @Getter
     private String messageKey;
-
-    private BudgetCategoryMessageCode(String messageKey) {
-        this.messageKey = messageKey;
-    }
 
 }
 

@@ -1,8 +1,11 @@
 package br.com.yacatecuhtli.domain.payment;
 
 import br.com.yacatecuhtli.core.exception.ErrorMessageCode;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum PaymentTypeMessageCode implements ErrorMessageCode {
 
     PAYMENT_TYPE_NAME_IS_BLANK("payment-type.name.error.is-blank"),
@@ -20,9 +23,5 @@ public enum PaymentTypeMessageCode implements ErrorMessageCode {
 
     @Getter
     private String messageKey;
-
-    private PaymentTypeMessageCode(String messageKey) {
-        this.messageKey = messageKey;
-    }
 
 }
