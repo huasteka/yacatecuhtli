@@ -1,6 +1,7 @@
 package br.com.yacatecuhtli.domain.entry.revert;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.*;
 
 @Data

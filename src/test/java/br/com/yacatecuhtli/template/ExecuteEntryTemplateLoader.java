@@ -21,7 +21,7 @@ public class ExecuteEntryTemplateLoader extends AbstractTemplateLoader {
         Rule jsonRule = new Rule();
         jsonRule.add("addition", jsonRule.sequence(bigDecimalSequence));
         jsonRule.add("discount", jsonRule.sequence(bigDecimalSequence));
-        jsonRule.add("executeAt", SystemTime.INSTANCE.now());
+        jsonRule.add("executeAt", SystemTime.INSTANCE.getNow());
         Fixture.of(EntryExecutionJson.class).addTemplate(VALID_EXECUTED_ENTRY_TEMPLATE, jsonRule);
     }
 

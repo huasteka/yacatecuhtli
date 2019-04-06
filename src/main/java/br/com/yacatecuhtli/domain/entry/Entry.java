@@ -124,7 +124,7 @@ public class Entry extends VersionedEntity<EntryJson> {
 
     @PrePersist
     protected void onCreate() {
-        this.issuedAt = SystemTime.INSTANCE.now();
+        this.issuedAt = SystemTime.INSTANCE.getNow();
     }
 
 }

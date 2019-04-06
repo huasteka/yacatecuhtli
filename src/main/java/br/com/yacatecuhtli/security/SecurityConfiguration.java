@@ -1,7 +1,5 @@
 package br.com.yacatecuhtli.security;
 
-import br.com.yacatecuhtli.security.jwt.JWTConfigurer;
-import br.com.yacatecuhtli.security.jwt.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,15 +10,22 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import br.com.yacatecuhtli.security.jwt.JWTConfigurer;
+import br.com.yacatecuhtli.security.jwt.TokenProvider;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private TokenProvider tokenProvider;
 
-    @Override
+    @Autowired
+    public SecurityConfiguration(TokenProvider tokenProvider) {
+		this.tokenProvider = tokenProvider;
+	}
+
+	@Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers(HttpMethod.OPTIONS, "/**")

@@ -1,8 +1,12 @@
 package br.com.yacatecuhtli.security;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Constants for Spring Security authorities.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AuthoritiesConstants {
 
     public static final String ADMIN = "ROLE_ADMIN";
@@ -11,7 +15,4 @@ public final class AuthoritiesConstants {
 
     public static final String ANONYMOUS = "ROLE_ANONYMOUS";
 
-    private AuthoritiesConstants() {
-
-    }
 }

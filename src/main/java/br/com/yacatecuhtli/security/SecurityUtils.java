@@ -7,13 +7,13 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Collection;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SecurityUtils {
-
-    private SecurityUtils() {
-
-    }
 
     /**
      * Get the login of the current user.
@@ -76,4 +76,5 @@ public final class SecurityUtils {
         }
         return false;
     }
+
 }

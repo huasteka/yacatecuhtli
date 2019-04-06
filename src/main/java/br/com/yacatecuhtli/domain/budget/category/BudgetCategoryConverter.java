@@ -1,19 +1,22 @@
 package br.com.yacatecuhtli.domain.budget.category;
 
-import br.com.yacatecuhtli.core.json.JsonConverter;
-import br.com.yacatecuhtli.domain.budget.group.BudgetGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import br.com.yacatecuhtli.core.json.JsonConverter;
+import br.com.yacatecuhtli.domain.budget.group.BudgetGroupRepository;
 
 @Component
 public class BudgetCategoryConverter extends JsonConverter<BudgetCategoryJson, BudgetCategory> {
 
-    @Autowired
     private BudgetGroupRepository budgetGroupRepository;
 
-    @Override
+    @Autowired
+    public BudgetCategoryConverter(BudgetGroupRepository budgetGroupRepository) {
+		this.budgetGroupRepository = budgetGroupRepository;
+	}
+
+	@Override
     public BudgetCategory convert(BudgetCategoryJson source) {
         BudgetCategory budgetCategory = new BudgetCategory();
         update(source, budgetCategory);

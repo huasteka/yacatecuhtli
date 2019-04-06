@@ -9,13 +9,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledEntryConverter extends JsonConverter<ScheduledEntryJson, ScheduledEntry> {
 
-    @Autowired
     private BudgetCategoryRepository categoryRepository;
 
-    @Autowired
     private EntryConverter entryConverter;
 
-    @Override
+    @Autowired
+    public ScheduledEntryConverter(BudgetCategoryRepository categoryRepository, EntryConverter entryConverter) {
+		this.categoryRepository = categoryRepository;
+		this.entryConverter = entryConverter;
+	}
+
+	@Override
     public ScheduledEntry convert(ScheduledEntryJson source) {
         ScheduledEntry scheduledEntry = new ScheduledEntry();
         update(source, scheduledEntry);

@@ -13,4 +13,5 @@ public interface EntryRepository extends EntityRepository<Entry> {
     Page<Entry> findAllByAccountIdOrderByIssuedAtDesc(Integer accountId, Pageable pageable);
 
     List<Entry> findAllByCodeOrderByIssuedAtDesc(String entryCode);
+
 }

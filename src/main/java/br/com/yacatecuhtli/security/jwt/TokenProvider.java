@@ -1,13 +1,16 @@
 package br.com.yacatecuhtli.security.jwt;
 
-import br.com.yacatecuhtli.core.service.DateService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,8 +19,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import br.com.yacatecuhtli.core.service.DateService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 
 @Component
 public class TokenProvider {
@@ -35,7 +41,7 @@ public class TokenProvider {
     @Value("${application.jwt.token-validity-in-seconds-for-remember-me}")
     private long tokenValidityInSecondsForRememberMe;
 
-    @Autowired
+    @Resource
     private DateService dateService;
 
     public String createToken(Authentication authentication, Boolean rememberMe) {
@@ -91,4 +97,5 @@ public class TokenProvider {
     public byte[] getSecretKey() {
         return secretKey.getBytes();
     }
+
 }

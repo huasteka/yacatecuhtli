@@ -1,10 +1,11 @@
 package br.com.yacatecuhtli.domain.payment.terms;
 
-import br.com.yacatecuhtli.core.json.JsonConverter;
 import org.springframework.stereotype.Component;
 
+import br.com.yacatecuhtli.core.port.ConverterPort;
+
 @Component
-public class PaymentTermsConverter extends JsonConverter<PaymentTermsJson, PaymentTerms> {
+public class PaymentTermsConverter implements ConverterPort<PaymentTermsJson, PaymentTerms> {
 
     @Override
     public PaymentTerms convert(PaymentTermsJson source) {

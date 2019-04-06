@@ -1,30 +1,38 @@
 package br.com.yacatecuhtli.domain.entry.transfer;
 
-import br.com.yacatecuhtli.core.SystemTime;
-import br.com.yacatecuhtli.core.json.JsonConverter;
+import java.math.BigDecimal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import br.com.yacatecuhtli.core.port.ConverterPort;
 import br.com.yacatecuhtli.core.service.DateService;
 import br.com.yacatecuhtli.domain.account.AccountRepository;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryType;
 import br.com.yacatecuhtli.domain.payment.PaymentTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
 
 @Component
-public class AccountTransferConverter extends JsonConverter<AccountTransferJson, TransferredEntry> {
+public class AccountTransferConverter implements ConverterPort<AccountTransferJson, TransferredEntry> {
 
-    @Autowired
-    protected AccountRepository accountRepository;
+	protected AccountRepository accountRepository;
 
-    @Autowired
-    protected PaymentTypeRepository paymentTypeRepository;
+	protected PaymentTypeRepository paymentTypeRepository;
 
-    @Autowired
     protected DateService dateService;
 
-    @Override
+    @Autowired
+    public AccountTransferConverter(
+    		AccountRepository accountRepository, 
+    		PaymentTypeRepository paymentTypeRepository,
+			DateService dateService
+	) {
+		this.accountRepository = accountRepository;
+		this.paymentTypeRepository = paymentTypeRepository;
+		this.dateService = dateService;
+	}
+
+	@Override
     public TransferredEntry convert(AccountTransferJson source) {
         TransferredEntry transferredEntry = new TransferredEntry();
         update(source, transferredEntry);

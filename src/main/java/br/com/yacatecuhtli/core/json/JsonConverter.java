@@ -1,18 +1,18 @@
 package br.com.yacatecuhtli.core.json;
 
-import br.com.yacatecuhtli.core.entity.EntityRepository;
-import br.com.yacatecuhtli.core.entity.PersistentEntity;
-import org.springframework.core.convert.converter.Converter;
-
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public abstract class JsonConverter<S, T> implements Converter<S, T> {
+import br.com.yacatecuhtli.core.entity.EntityRepository;
+import br.com.yacatecuhtli.core.entity.PersistentEntity;
+import br.com.yacatecuhtli.core.port.ConverterPort;
 
-    public abstract void update(S source, T target);
+public abstract class JsonConverter<S extends JsonRepresentation, T extends PersistentEntity<S>> implements ConverterPort<S, T> {
 
-    protected <E extends PersistentEntity<J>, J extends JsonRepresentation> void updateRelationship(EntityRepository<E> repository, J json, Consumer<E> callback) {
-        Optional.ofNullable(json).filter(j -> j.getId() != null).ifPresent((j) -> callback.accept(repository.findOne(j.getId())));
+    protected <J extends JsonRepresentation, E extends PersistentEntity<J>> void updateRelationship(EntityRepository<E> repository, J json, Consumer<E> callback) {
+        Optional.ofNullable(json)
+	        .filter(j -> j.getId() != null)
+	        .ifPresent((j) -> callback.accept(repository.findOne(j.getId())));
     }
 
 }

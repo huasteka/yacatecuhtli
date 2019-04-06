@@ -1,13 +1,18 @@
 package br.com.yacatecuhtli.core.controller;
 
-import lombok.*;
+import br.com.yacatecuhtli.core.port.PaginationPort;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @EqualsAndHashCode
-public class RequestPagination {
+@ToString
+public class RequestPagination implements PaginationPort {
 
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
 
