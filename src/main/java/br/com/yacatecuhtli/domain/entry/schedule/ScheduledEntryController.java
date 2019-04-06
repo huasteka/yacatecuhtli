@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/schedule")
 public class ScheduledEntryController extends AbstractRestController {
 
-    @Autowired
     private ScheduledEntryService scheduleService;
 
-    @PostMapping("/deposit")
+    @Autowired
+    public ScheduledEntryController(ScheduledEntryService scheduleService) {
+		this.scheduleService = scheduleService;
+	}
+
+	@PostMapping("/deposit")
     public ResponseEntity<JsonResponse> scheduleDeposit(@RequestBody ScheduledEntryJson entry) {
         return withJson(scheduleService.scheduleEntry(entry, EntryType.DEPOSIT), HttpStatus.CREATED);
     }

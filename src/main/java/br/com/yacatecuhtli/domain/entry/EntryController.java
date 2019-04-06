@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/entries")
 public class EntryController extends AbstractRestController {
 
-    @Autowired
     private EntryService entryService;
+    
+    @Autowired
+    public EntryController(EntryService entryService) {
+		this.entryService = entryService;
+	}
 
-    @PostMapping("/deposit")
+	@PostMapping("/deposit")
     public ResponseEntity<JsonResponse> deposit(@RequestBody EntryJson entry) {
         return withJson(entryService.deposit(entry), HttpStatus.CREATED);
     }

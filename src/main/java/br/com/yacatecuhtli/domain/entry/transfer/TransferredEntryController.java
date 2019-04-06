@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/transfers")
 public class TransferredEntryController extends AbstractRestController {
 
-    @Autowired
     private TransferredEntryService transferService;
 
-    @PostMapping
+    @Autowired
+    public TransferredEntryController(TransferredEntryService transferService) {
+		this.transferService = transferService;
+	}
+
+	@PostMapping
     public ResponseEntity<JsonResponse> transfer(@RequestBody AccountTransferJson accountTransfer) {
         return withJson(transferService.transfer(accountTransfer), HttpStatus.CREATED);
     }

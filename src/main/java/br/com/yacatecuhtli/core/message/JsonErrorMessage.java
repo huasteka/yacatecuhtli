@@ -2,6 +2,8 @@ package br.com.yacatecuhtli.core.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import br.com.yacatecuhtli.core.port.ErrorPort;
 import lombok.*;
 
 @Data
@@ -10,9 +12,10 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JsonErrorMessage {
+public class JsonErrorMessage implements ErrorPort {
 
     private String messageKey;
+    
     private String message;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

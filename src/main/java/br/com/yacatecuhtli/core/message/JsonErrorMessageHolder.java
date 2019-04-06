@@ -12,6 +12,7 @@ import lombok.ToString;
 public class JsonErrorMessageHolder {
 
     protected JsonErrorMessage errorMessage;
+    
     protected Object[] parameters;
 
     public static JsonErrorMessageHolder createInstance(String messageKey, Object[] parameters) {

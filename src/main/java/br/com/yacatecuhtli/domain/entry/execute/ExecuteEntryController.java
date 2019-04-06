@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ExecuteEntryController extends AbstractRestController {
 
-    @Autowired
-    private ExecuteEntryService executionService;
+	private ExecuteEntryService executionService;
 
-    @PostMapping("/api/entries/{entryId}/execute")
+    @Autowired
+    public ExecuteEntryController(ExecuteEntryService executionService) {
+		this.executionService = executionService;
+	}
+
+	@PostMapping("/api/entries/{entryId}/execute")
     public ResponseEntity<JsonResponse> execute(@PathVariable Integer entryId, @RequestBody EntryExecutionJson entryExecution) {
         entryExecution.setEntryId(entryId);
         return withJson(executionService.executeEntry(entryExecution));
