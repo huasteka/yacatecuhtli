@@ -1,29 +1,34 @@
 package br.com.yacatecuhtli.domain.account.balance;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.yacatecuhtli.core.exception.BusinessRuleException;
 import br.com.yacatecuhtli.core.service.AbstractService;
 import br.com.yacatecuhtli.core.service.DateService;
 import br.com.yacatecuhtli.domain.account.Account;
 import br.com.yacatecuhtli.domain.entry.Entry;
 import br.com.yacatecuhtli.domain.entry.EntryType;
-import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.util.Optional;
 
 @Service
 public class AccountBalanceService extends AbstractService {
 
-    @Autowired
     protected AccountBalanceRepository accountBalanceRepository;
 
-    @Autowired
     protected DateService dateService;
 
-    @Transactional
+    @Autowired
+    public AccountBalanceService(AccountBalanceRepository accountBalanceRepository, DateService dateService) {
+		this.accountBalanceRepository = accountBalanceRepository;
+		this.dateService = dateService;
+	}
+
+	@Transactional
     public void performOperation(Entry entry) {
         AccountBalance accountBalance = createAccountBalanceIfNotExists(entry);
         if (EntryType.DEPOSIT.equals(entry.getType())) {

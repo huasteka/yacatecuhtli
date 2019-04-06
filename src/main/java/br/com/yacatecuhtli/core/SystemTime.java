@@ -3,12 +3,13 @@ package br.com.yacatecuhtli.core;
 import java.time.Instant;
 import java.util.Date;
 
-public class SystemTime {
+public class SystemTime implements SystemTimeInterface {
 
-    public static final SystemTime INSTANCE = new SystemTime();
+	public static final SystemTime INSTANCE = new SystemTime();
 
-    public Date now() {
-        return Date.from(Instant.now());
-    }
+	@Override
+	public Date getNow() {
+		return Date.from(Instant.now());
+	}
 
 }

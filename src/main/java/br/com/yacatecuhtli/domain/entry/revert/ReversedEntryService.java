@@ -1,27 +1,37 @@
 package br.com.yacatecuhtli.domain.entry.revert;
 
-import br.com.yacatecuhtli.core.service.AbstractService;
-import br.com.yacatecuhtli.domain.account.balance.AccountBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.yacatecuhtli.core.service.AbstractService;
+import br.com.yacatecuhtli.domain.account.balance.AccountBalanceService;
+
 @Service
 public class ReversedEntryService extends AbstractService {
 
-    @Autowired
     protected ReversedEntryValidator reversedEntryValidator;
 
-    @Autowired
     protected ReversedEntryRepository reversedEntryRepository;
 
-    @Autowired
     protected EntryReversalConverter entryReversalConverter;
 
-    @Autowired
     protected AccountBalanceService accountBalanceService;
 
-    @Transactional
+	@Autowired
+    public ReversedEntryService(
+    		ReversedEntryValidator reversedEntryValidator,
+			ReversedEntryRepository reversedEntryRepository, 
+			EntryReversalConverter entryReversalConverter,
+			AccountBalanceService accountBalanceService
+	) {
+		this.reversedEntryValidator = reversedEntryValidator;
+		this.reversedEntryRepository = reversedEntryRepository;
+		this.entryReversalConverter = entryReversalConverter;
+		this.accountBalanceService = accountBalanceService;
+	}
+
+	@Transactional
     public void reverse(EntryReversalJson entryReversal) {
         reversedEntryValidator.validate(entryReversal);
         ReversedEntry result = reversedEntryRepository.save(entryReversalConverter.convert(entryReversal));

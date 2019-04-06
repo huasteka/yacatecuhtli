@@ -1,34 +1,44 @@
 package br.com.yacatecuhtli.domain.entry;
 
-import br.com.yacatecuhtli.core.json.JsonPagedResponse;
-import br.com.yacatecuhtli.core.service.AbstractService;
-import br.com.yacatecuhtli.domain.account.balance.AccountBalanceService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.com.yacatecuhtli.core.json.JsonPagedResponse;
+import br.com.yacatecuhtli.core.service.AbstractService;
+import br.com.yacatecuhtli.domain.account.balance.AccountBalanceService;
+
 @Service
 public class EntryService extends AbstractService {
 
-    @Autowired
     protected EntryRepository entryRepository;
 
-    @Autowired
-    protected EntryValidator entryValidator;
+	protected EntryValidator entryValidator;
 
-    @Autowired
     protected EntryConverter entryConverter;
 
-    @Autowired
     protected AccountBalanceService accountBalanceService;
 
-    @Transactional
+    @Autowired
+    public EntryService(
+    		EntryRepository entryRepository, 
+    		EntryValidator entryValidator, 
+    		EntryConverter entryConverter,
+			AccountBalanceService accountBalanceService
+	) {
+		this.entryRepository = entryRepository;
+		this.entryValidator = entryValidator;
+		this.entryConverter = entryConverter;
+		this.accountBalanceService = accountBalanceService;
+	}
+
+	@Transactional
     public EntryJson deposit(EntryJson entry) {
         return execute(entry, EntryType.DEPOSIT);
     }
