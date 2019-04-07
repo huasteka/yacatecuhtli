@@ -2,10 +2,8 @@ package br.com.yacatecuhtli.domain.entry;
 
 import br.com.yacatecuhtli.core.AbstractControllerSpec;
 import br.com.yacatecuhtli.core.json.JsonPagedResponse;
-import br.com.yacatecuhtli.core.json.JsonResponse;
 import br.com.yacatecuhtli.core.json.JsonResponseFactory;
 import br.com.yacatecuhtli.core.json.JsonResponseMetadata;
-import br.com.yacatecuhtli.domain.entry.revert.ReversedEntryService;
 import br.com.yacatecuhtli.template.EntryTemplateLoader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;

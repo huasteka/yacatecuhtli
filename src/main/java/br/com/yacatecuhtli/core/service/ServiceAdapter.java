@@ -2,6 +2,8 @@ package br.com.yacatecuhtli.core.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Pageable;
 
 import br.com.yacatecuhtli.core.entity.EntityRepository;
@@ -26,6 +28,7 @@ public abstract class ServiceAdapter<J extends JsonRepresentation, E extends Per
 		this.repository = repository;
 	}
 
+	@Transactional
 	@Override
 	public J save(J jsonRepresentation) {
 		validator.validate(jsonRepresentation);
@@ -33,6 +36,7 @@ public abstract class ServiceAdapter<J extends JsonRepresentation, E extends Per
 		return entity.toJson();
 	}
 
+	@Transactional
 	@Override
 	public void update(Integer entityId, J jsonRepresentation) {
 		validator.validate(jsonRepresentation);
@@ -41,6 +45,7 @@ public abstract class ServiceAdapter<J extends JsonRepresentation, E extends Per
 		repository.save(entity);
 	}
 
+	@Transactional
 	@Override
 	public void destroy(Integer entityId) {
 		validator.exists(entityId);

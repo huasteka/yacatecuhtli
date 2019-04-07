@@ -2,7 +2,6 @@ package br.com.yacatecuhtli.template;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.base.Range;
 import br.com.six2six.fixturefactory.base.Sequence;
 import br.com.yacatecuhtli.core.AbstractTemplateLoader;
 import br.com.yacatecuhtli.domain.account.Account;
@@ -16,7 +15,6 @@ import br.com.yacatecuhtli.domain.payment.PaymentType;
 import br.com.yacatecuhtli.domain.payment.PaymentTypeJson;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.concurrent.TimeUnit;
 
