@@ -21,7 +21,8 @@ import java.io.IOException;
  */
 public class JWTFilter extends GenericFilterBean {
 
-    private final Logger log = LoggerFactory.getLogger(JWTFilter.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(JWTFilter.class);
+    private final static String JWT_AUTHORIZATION_BEARER = "Bearer ";
 
     private TokenProvider tokenProvider;
 
@@ -30,28 +31,28 @@ public class JWTFilter extends GenericFilterBean {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         try {
             HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
             String jwt = resolveToken(httpServletRequest);
-            if (StringUtils.hasText(jwt)) {
-                if (this.tokenProvider.validateToken(jwt)) {
-                    Authentication authentication = this.tokenProvider.getAuthentication(jwt);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+            if (StringUtils.hasText(jwt) && this.tokenProvider.validateToken(jwt)) {
+                Authentication authentication = this.tokenProvider.getAuthentication(jwt);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (ExpiredJwtException eje) {
-            log.info("Security exception for user {} - {}", eje.getClaims().getSubject(), eje.getMessage());
+            LOGGER.info("Security exception for user {} - {}", eje.getClaims().getSubject(), eje.getMessage());
             ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JWT_AUTHORIZATION_BEARER)) {
+            return bearerToken.substring(JWT_AUTHORIZATION_BEARER.length()).trim();
         }
         return null;
     }
+
 }

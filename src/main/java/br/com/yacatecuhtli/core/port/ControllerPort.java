@@ -5,16 +5,16 @@ import org.springframework.http.ResponseEntity;
 import br.com.yacatecuhtli.core.controller.RequestPagination;
 import br.com.yacatecuhtli.core.json.JsonRepresentation;
 
-public interface ControllerPort<RQ extends JsonRepresentation, RS extends ResponsePort> {
+public interface ControllerPort<R extends JsonRepresentation, S extends ResponsePort> {
 
-	ResponseEntity<RS> save(RQ jsonObject);
+	ResponseEntity<S> save(R jsonObject);
 
-	ResponseEntity<RS> update(Integer id, RQ jsonObject);
+	ResponseEntity<S> update(Integer id, R jsonObject);
 
-	ResponseEntity<RS> destroy(Integer id);
+	ResponseEntity<S> destroy(Integer id);
 
-	ResponseEntity<RS> findOne(Integer id);
+	ResponseEntity<S> findOne(Integer id);
 
-	ResponseEntity<RS> findAll(RequestPagination pagination);
+	ResponseEntity<S> findAll(RequestPagination pagination);
 
 }

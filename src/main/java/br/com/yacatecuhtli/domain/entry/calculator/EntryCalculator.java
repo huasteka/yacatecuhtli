@@ -58,10 +58,6 @@ public class EntryCalculator {
 		return calculateNetValue(getEntry().getAddition(), getEntry().getDiscount());
 	}
 
-	private BigDecimal convertDecimalToPercentage(BigDecimal decimalValue) {
-		return coalesce(decimalValue).multiply(ONE_HUNDRED).setScale(2, RoundingMode.HALF_EVEN);
-	}
-
 	private BigDecimal convertPercentageToDecimal(BigDecimal percentageValue) {
 		return coalesce(percentageValue).divide(ONE_HUNDRED, 2, RoundingMode.HALF_EVEN);
 	}
