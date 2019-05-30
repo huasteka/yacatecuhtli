@@ -24,7 +24,7 @@ import java.util.List;
 public class EntryControllerTests extends AbstractControllerSpec {
 
     @MockBean
-    private EntryService entryService;
+    protected EntryService entryService;
 
     @Test
     public void shouldSendPostRequestToDeposit() throws Exception {

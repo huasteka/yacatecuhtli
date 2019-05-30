@@ -20,20 +20,20 @@ public class CalculatedEntryTests {
 	@Test
 	public void shouldCalculateEntryValues() {
 		PaymentTerms paymentTerm = new PaymentTerms();
-		paymentTerm.setTax(new BigDecimal(10.00));
+		paymentTerm.setTax(new BigDecimal("10.00"));
 		PaymentType paymentType = new PaymentType();
 		paymentType.setTerms(paymentTerm);
 
 		Entry mock = new Entry();
 		mock.setPaymentType(paymentType);
-		mock.setGrossValue(new BigDecimal(246.80));
-		mock.setDiscount(new BigDecimal(36.90));
-		mock.setAddition(new BigDecimal(12.30));
+		mock.setGrossValue(new BigDecimal("246.80"));
+		mock.setDiscount(new BigDecimal("36.90"));
+		mock.setAddition(new BigDecimal("12.30"));
 
 		EntryCalculator calculator = new EntryCalculator(mock);
 		
-		BigDecimal expectedTax = createFixedDecimal(24.68);
-		BigDecimal expectedTotal = createFixedDecimal(197.52);
+		BigDecimal expectedTax = createFixedDecimal("24.68");
+		BigDecimal expectedTotal = createFixedDecimal("197.52");
 		Assert.assertEquals(expectedTax, calculator.calculateTaxValue());
 		Assert.assertEquals(expectedTotal, calculator.calculateNetValue());
 	}
@@ -41,19 +41,19 @@ public class CalculatedEntryTests {
 	@Test
 	public void shouldProduceEntryExecution() {
 		CalculatedEntry expected = new CalculatedEntry();
-		expected.setAddition(createFixedDecimal(12.30));
-		expected.setDiscount(createFixedDecimal(36.90));
-		expected.setTax(createFixedDecimal(24.68));
-		expected.setNetValue(createFixedDecimal(197.52));
+		expected.setAddition(createFixedDecimal("12.30"));
+		expected.setDiscount(createFixedDecimal("36.90"));
+		expected.setTax(createFixedDecimal("24.68"));
+		expected.setNetValue(createFixedDecimal("197.52"));
 		
 		PaymentTerms paymentTerm = new PaymentTerms();
-		paymentTerm.setTax(new BigDecimal(10.00));
+		paymentTerm.setTax(new BigDecimal("10.00"));
 		PaymentType paymentType = new PaymentType();
 		paymentType.setTerms(paymentTerm);
 		
 		Entry mock = new Entry();
 		mock.setPaymentType(paymentType);
-		mock.setGrossValue(new BigDecimal(246.80));
+		mock.setGrossValue(new BigDecimal("246.80"));
 		EntryExecutionJson json = new EntryExecutionJson();
 		json.setAddition(expected.getAddition());
 		json.setDiscount(expected.getDiscount());
@@ -65,7 +65,7 @@ public class CalculatedEntryTests {
 		Assert.assertEquals(expected.getNetValue(), result.getNetValue());
 	}
 	
-	private BigDecimal createFixedDecimal(double value) {
+	private BigDecimal createFixedDecimal(String value) {
 		return new BigDecimal(value).setScale(2, RoundingMode.HALF_EVEN);
 	}
 	

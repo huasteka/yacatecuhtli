@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.nio.charset.Charset;
 
-public class AbstractControllerSpec extends AbstractApplicationSpec {
+public abstract class AbstractControllerSpec extends AbstractApplicationSpec {
 
     protected MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.defaultCharset());
 
