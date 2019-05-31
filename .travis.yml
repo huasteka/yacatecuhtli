@@ -6,7 +6,7 @@ env:
 before_install:
   - chmod +x mvnw
   - sudo apt-get install jq
-  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
+  - curl $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets | map({content_type, browser_download_url} | select(.content_type | contains("application/x-java-archive"))) | .[0].browser_download_url') -o codacy-coverage-reporter-assembly.jar
 after_success:
-  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r target/site/jacoco/jacoco.xml
+  - java -jar ~/codacy-coverage-reporter-assembly.jar report -l Java -r target/site/jacoco/jacoco.xml
   - bash <(curl -s https://codecov.io/bash)
