@@ -20,7 +20,7 @@ public class ReversedEntryController extends AbstractRestController {
 		this.revertService = revertService;
 	}
 
-	@DeleteMapping("/api/entries/reverse/{entryId}")
+	@DeleteMapping("/api/entries/{entryId}/reverse")
     public ResponseEntity<JsonResponse> reverse(@PathVariable Integer entryId) {
         revertService.reverse(EntryReversalJson.builder().entryId(entryId).build());
         return withJson(HttpStatus.NO_CONTENT);
