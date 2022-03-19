@@ -40,15 +40,15 @@ public class EntryService extends AbstractService {
 
 	@Transactional
     public EntryJson deposit(EntryJson entry) {
-        return execute(entry, EntryType.DEPOSIT);
+        return singleOperation(entry, EntryType.DEPOSIT);
     }
 
     @Transactional
     public EntryJson withdraw(EntryJson entry) {
-        return execute(entry, EntryType.WITHDRAW);
+        return singleOperation(entry, EntryType.WITHDRAW);
     }
 
-    private EntryJson execute(EntryJson entryJson, EntryType type) {
+    private EntryJson singleOperation(EntryJson entryJson, EntryType type) {
         validate(entryJson, type);
         Entry entry = entryRepository.save(entryConverter.convert(entryJson));
         accountBalanceService.performOperation(entry);
@@ -80,6 +80,11 @@ public class EntryService extends AbstractService {
                 .stream()
                 .map(Entry::toJson)
                 .collect(Collectors.toList());
+    }
+
+    public EntryJson findById(Integer entryId) {
+        entryValidator.exists(entryId);
+        return entryRepository.findOne(entryId).toJson();
     }
 
 }

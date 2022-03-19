@@ -13,12 +13,15 @@ import br.com.yacatecuhtli.domain.payment.PaymentTypeRepository;
 @Component
 public class EntryValidator extends VoidValidator<EntryJson> {
 
+    protected EntryRepository entryRepository;
+
     protected AccountRepository accountRepository;
 
     protected PaymentTypeRepository paymentTypeRepository;
     
     @Autowired
-    public EntryValidator(AccountRepository accountRepository, PaymentTypeRepository paymentTypeRepository) {
+    public EntryValidator(EntryRepository entryRepository, AccountRepository accountRepository, PaymentTypeRepository paymentTypeRepository) {
+        this.entryRepository = entryRepository;
 		this.accountRepository = accountRepository;
 		this.paymentTypeRepository = paymentTypeRepository;
 	}
@@ -28,6 +31,10 @@ public class EntryValidator extends VoidValidator<EntryJson> {
         BusinessRuleException exception = new BusinessRuleException();
         executeValidation(exception, entry);
         exception.throwException();
+    }
+
+    public void exists(Integer entityId) throws BusinessRuleException {
+        ensureThatExists(entityId);
     }
 
     public void executeValidation(BusinessRuleException exception, EntryJson entry) {
@@ -65,6 +72,12 @@ public class EntryValidator extends VoidValidator<EntryJson> {
         } else if (!accountRepository.exists(entry.getAccount().getId())) {
             exception.addMessage(EntryMessageCode.ENTRY_ACCOUNT_NOT_AVAILABLE);
         }
+    }
+
+    private void ensureThatExists(Integer entityId) {
+        new BusinessRuleException()
+                .addMessage(() -> entryRepository.findOne(entityId) == null, EntryMessageCode.ENTRY_NOT_EXISTS)
+                .throwException();
     }
 
 }

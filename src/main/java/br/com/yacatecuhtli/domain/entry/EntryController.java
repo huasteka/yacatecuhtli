@@ -30,6 +30,11 @@ public class EntryController extends AbstractRestController {
         return withJson(entryService.withdraw(entry), HttpStatus.CREATED);
     }
 
+    @GetMapping("/{entryId}")
+    public ResponseEntity<JsonResponse> findById(@PathVariable Integer entryId) {
+        return withJson(entryService.findById(entryId));
+    }
+
     @GetMapping("/accounts/{accountId}")
     public ResponseEntity<JsonResponse> findByAccount(@PathVariable Integer accountId, RequestPagination pagination) {
         return withJson(entryService.findByAccount(accountId, new PageRequest(pagination.getCurrentPage(), pagination.getPageSize())));
