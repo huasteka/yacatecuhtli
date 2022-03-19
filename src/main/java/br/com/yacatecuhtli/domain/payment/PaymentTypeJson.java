@@ -27,4 +27,8 @@ public class PaymentTypeJson implements JsonRepresentation {
         return terms != null;
     }
 
+    public boolean hasPaymentAccount() {
+        return paymentAccount != null && paymentAccount.getId() != null;
+    }
+
 }
