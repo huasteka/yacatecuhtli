@@ -1,5 +1,7 @@
 package br.com.yacatecuhtli.domain.payment;
 
+import br.com.yacatecuhtli.domain.account.Account;
+import br.com.yacatecuhtli.domain.account.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -11,12 +13,15 @@ import br.com.yacatecuhtli.domain.payment.terms.PaymentTermsValidator;
 @Component
 public class PaymentTypeValidator extends CrudValidator<PaymentTypeJson> {
 
+    private AccountRepository accountRepository;
+
     private PaymentTypeRepository paymentTypeRepository;
 
     private PaymentTermsValidator paymentTermsValidator;
 
     @Autowired
-    public PaymentTypeValidator(PaymentTypeRepository paymentTypeRepository, PaymentTermsValidator paymentTermsValidator) {
+    public PaymentTypeValidator(AccountRepository accountRepository, PaymentTypeRepository paymentTypeRepository, PaymentTermsValidator paymentTermsValidator) {
+        this.accountRepository = accountRepository;
 		this.paymentTypeRepository = paymentTypeRepository;
 		this.paymentTermsValidator = paymentTermsValidator;
 	}
@@ -24,6 +29,7 @@ public class PaymentTypeValidator extends CrudValidator<PaymentTypeJson> {
 	@Override
     public void executeValidation(PaymentTypeJson object) throws BusinessRuleException {
         ensureThatNameIsNotBlank(object);
+        ensureThatPaymentAccountIsNotBlank(object);
         if (object.hasPaymentTerms()) {
             paymentTermsValidator.validate(object.getTerms());
         }
@@ -49,6 +55,19 @@ public class PaymentTypeValidator extends CrudValidator<PaymentTypeJson> {
         if (exists != null && !exists.getId().equals(paymentTypeJson.getId())) {
             exception.addMessage(PaymentTypeMessageCode.PAYMENT_TYPE_NAME_NOT_AVAILABLE);
         }
+    }
+
+    private void ensureThatPaymentAccountIsNotBlank(PaymentTypeJson paymentTypeJson) {
+        BusinessRuleException exception = new BusinessRuleException();
+        if (!paymentTypeJson.hasPaymentAccount()) {
+            exception.addMessage(PaymentTypeMessageCode.PAYMENT_TYPE_ACCOUNT_IS_BLANK);
+        } else {
+            Account paymentAccount = accountRepository.findOne(paymentTypeJson.getPaymentAccount().getId());
+            if (paymentAccount == null) {
+                exception.addMessage(PaymentTypeMessageCode.PAYMENT_TYPE_ACCOUNT_NOT_EXISTS);
+            }
+        }
+        exception.throwException();
     }
 
     private void ensureThatExists(Integer paymentTypeId) {
