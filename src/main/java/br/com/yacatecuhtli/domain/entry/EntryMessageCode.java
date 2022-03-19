@@ -8,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum EntryMessageCode implements ErrorMessageCode {
 
+    ENTRY_NOT_EXISTS("entry.error.not-exists"),
     ENTRY_TYPE_IS_BLANK("entry.type.error.is-blank"),
     ENTRY_GROSS_VALUE_IS_BLANK("entry.gross-value.error.is-blank"),
     ENTRY_GROSS_VALUE_LESS_THAN_ZERO("entry.gross-value.error.less-than-zero"),
