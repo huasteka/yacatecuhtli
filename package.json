@@ -11,11 +11,7 @@
     "type": "git",
     "url": "https://github.com/huasteka/yacatecuhtli.git"
   },
-  "apidoc": {
-    "title": "Yacatecuhtli",
-    "url": "https://yacatecuhtli.herokuapp.com/api"
-  },
   "dependencies": {
-    "apidoc": "~0.17.5"
+    "apidoc": "~0.50.1"
   }
 }
