@@ -39,6 +39,7 @@ public abstract class ServiceAdapter<J extends JsonRepresentation, E extends Per
 	@Transactional
 	@Override
 	public void update(Integer entityId, J jsonRepresentation) {
+		validator.exists(entityId);
 		validator.validate(jsonRepresentation);
 		E entity = repository.findOne(entityId);
 		converter.update(jsonRepresentation, entity);
