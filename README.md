@@ -12,7 +12,7 @@ Yacatecuhtli is an open source lightweight financial management API developed wi
 The minimum requirements are:
 
 - [PostgreSQL](http://www.postgresql.org) (>= 9.3)
-- [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+- [Java JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 ## Installation
 
@@ -35,8 +35,16 @@ that configures the application context with parameters you can find at the [doc
 
 To execute all tests, open a terminal and execute:
 
-```
+```sh
 mvnw test
+```
+
+## Run
+
+To run the application, open a terminal and execute:
+
+```sh
+mvnw spring-boot:run
 ```
 
 ## License

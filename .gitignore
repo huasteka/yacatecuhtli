@@ -27,4 +27,3 @@ src/main/resources/static/
 ### NodeJS ###
 node/
 node_modules/
-package-lock.json

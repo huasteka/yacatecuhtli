@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "description": "An open source lightweight financial management API",
   "scripts": {
-    "postinstall": "./node_modules/.bin/apidoc -i ./src/main/java/br/com/yacatecuhtli/domain -o ./src/main/resources/static"
+    "postinstall": "npm run apidoc",
+    "apidoc": "./node_modules/.bin/apidoc -i ./src/main/java/br/com/yacatecuhtli/domain -o ./src/main/resources/static"
   },
   "license": "GPL-3.0-only",
   "repository": {
