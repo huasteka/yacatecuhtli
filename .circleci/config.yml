@@ -14,6 +14,7 @@ jobs:
       - image: cimg/openjdk:8.0.322
     
     environment:
+      JACOCO_SOURCE_PATH: src/main/java
       CC_TEST_REPORTER_ID: caa0ad40684e3e136862b55f0a35bc7fa5c6f51827cd6b02b28b8ff308bf3ab1
 
     # Add steps to the job
@@ -30,11 +31,13 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
       - run:
-          name: "Generate and Upload Coverage Report"
+          name: "Generate Coverage Report"
+          command: ./mvnw test -Dskip.npm
+      - run:
+          name: "Upload Coverage Report"
           command: |
-            ./cc-test-reporter before-build
-            ./mvnw test -Dskip.npm
-            ./cc-test-reporter after-build --coverage-input-type jacoco --exit-code $?
+            ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco
+            ./cc-test-reporter upload-coverage
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
