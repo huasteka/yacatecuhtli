@@ -1,9 +1,8 @@
 # Yacatecuhtli
 
-[![Travis](https://img.shields.io/travis/huasteka/yacatecuhtli.svg?style=flat-square)](https://travis-ci.org/huasteka/yacatecuhtli)
-[![GitHub issues](https://img.shields.io/github/issues/huasteka/yacatecuhtli.svg?style=flat-square)](https://github.com/huasteka/yacatecuhtli/issues)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ea81edfce0004d3bb57114db0673773d)](https://www.codacy.com/app/huasteka/yacatecuhtli?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=huasteka/yacatecuhtli&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/ea81edfce0004d3bb57114db0673773d)](https://www.codacy.com/app/huasteka/yacatecuhtli?utm_source=github.com&utm_medium=referral&utm_content=huasteka/yacatecuhtli&utm_campaign=Badge_Coverage)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/huasteka/yacatecuhtli/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/huasteka/yacatecuhtli/tree/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c9de92281b03967cc886/maintainability)](https://codeclimate.com/github/huasteka/yacatecuhtli/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c9de92281b03967cc886/test_coverage)](https://codeclimate.com/github/huasteka/yacatecuhtli/test_coverage)
 
 Yacatecuhtli is an open source lightweight financial management API developed with [Spring Boot](https://projects.spring.io/spring-boot).
 

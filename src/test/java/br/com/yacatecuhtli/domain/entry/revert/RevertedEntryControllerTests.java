@@ -21,7 +21,7 @@ public class RevertedEntryControllerTests extends AbstractControllerSpec {
     @Test
     public void shouldSendDeleteRequestToReverse() throws Exception {
         this.getMvc()
-                .perform(MockMvcRequestBuilders.delete("/api/entries/reverse/{entryId}", MOCK_ENTRY_ID).contentType(getContentType()))
+                .perform(MockMvcRequestBuilders.delete("/api/entries/{entryId}/reverse", MOCK_ENTRY_ID).contentType(getContentType()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 

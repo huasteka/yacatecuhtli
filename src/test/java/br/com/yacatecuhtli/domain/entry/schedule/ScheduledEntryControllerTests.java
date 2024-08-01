@@ -23,12 +23,12 @@ public class ScheduledEntryControllerTests extends AbstractControllerSpec {
 
     @Test
     public void shouldSendPostRequestToScheduleDeposit() throws Exception {
-        doSendPostRequestToSchedule("/api/schedule/deposit", EntryType.DEPOSIT);
+        doSendPostRequestToSchedule("/api/schedules/deposit", EntryType.DEPOSIT);
     }
 
     @Test
     public void shouldSendPostRequestToScheduleWithdraw() throws Exception {
-        doSendPostRequestToSchedule("/api/schedule/withdraw", EntryType.WITHDRAW);
+        doSendPostRequestToSchedule("/api/schedules/withdraw", EntryType.WITHDRAW);
     }
 
     private void doSendPostRequestToSchedule(String resource, EntryType type) throws Exception {
