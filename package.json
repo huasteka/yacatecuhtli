@@ -13,6 +13,6 @@
     "url": "https://github.com/huasteka/yacatecuhtli.git"
   },
   "dependencies": {
-    "apidoc": "~0.50.1"
+    "apidoc": "~1.2.0"
   }
 }
